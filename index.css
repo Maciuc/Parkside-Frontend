@@ -1,0 +1,33 @@
+/*Paleta de culori
+https://www.w3schools.com/colors/tryit.asp?filename=trycolors_palettes5
+*/
+
+/*Continutul este redimensionat fata de root font size*/
+
+html {
+    font-size: 16px; /*full-screen root font size*/
+}
+
+@media screen and (max-width: 1200px)  {
+    html {
+        font-size: 12.5px;  
+    } 
+}   
+
+@media screen and (max-width: 950px)  {
+    html {
+        font-size: 11px;  
+    } 
+}   
+
+@media screen and (max-width: 800px)  {
+    html {
+        font-size: 9px;  
+    } 
+}  
+
+@media screen and (max-width: 650px)  {
+    html {
+        font-size: 7px;  
+    } 
+}  
