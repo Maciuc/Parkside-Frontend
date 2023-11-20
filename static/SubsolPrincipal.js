@@ -25,13 +25,23 @@ class SubsolPrincipal extends HTMLElement {
                     border-radius: 0 0 ${border_radius_default} 0;
                 }
 
-                .button-contact {
-                    margin: 2rem 0 0 3rem;
+                button {
                     border-radius: 1rem;
                     padding: 1rem 1.5rem;
-                    float: left;
                     bisplay: block;
                     width: fit-content;
+                    margin-top: 2rem;
+                    margin-bottom: 1rem;
+                }
+
+                .button-contact {
+                    margin-left: 3rem;
+                    float: left;
+                }
+
+                .button-inapoi-sus {
+                    margin-right: 3rem;
+                    float: right;
                 }
             </style>
             <div class="panou">
@@ -42,8 +52,8 @@ class SubsolPrincipal extends HTMLElement {
                     <button class="button-contact" onclick="location.href='/feedback.html'">
                         CONTACTEAZĂ-NE
                     </button>
-                    <button class="button-mergi-sus">
-                        Înapoi sus
+                    <button class="button-inapoi-sus">
+                        ÎNAPOI SUS
                     </button>
                 </div>
             </div>
@@ -51,8 +61,7 @@ class SubsolPrincipal extends HTMLElement {
     }
 
     goOnTopOfPage() {
-        console.log("ok");
-        window.scrollTo(0, 0);
+        window.scrollTo(0,0);
     }
 
     constructor() {
@@ -63,7 +72,7 @@ class SubsolPrincipal extends HTMLElement {
     }
 
     connectedCallback() {
-        shadow.querySelector(".button-mergi-sus").addEventListener("click",this.goOnTopOfPage);
+        shadow.querySelector(".button-inapoi-sus").addEventListener("click",this.goOnTopOfPage);
     }
 }
   

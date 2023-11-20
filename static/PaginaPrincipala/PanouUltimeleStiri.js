@@ -1,9 +1,8 @@
-import {font_family_default} from "../index.js";
+import {font_family_default,border_radius_default,border_default} from "../index.js";
 
 let shadow;
 
 let stiri;
-let numarStiriAfisate = 3;
 let indexulStiriiDinParteaStanga = 0;
 
 class PanouUltimeleStiri extends HTMLElement {
@@ -15,8 +14,9 @@ class PanouUltimeleStiri extends HTMLElement {
                 .container {
                     font-family: ${font_family_default};
                     margin: 0rem 12rem;
-                    border: 0.1rem solid black;
+                    border: ${border_default};
                     border-radius: 1rem;
+                    overflow: hidden;
                 }
 
                 .container-title {
@@ -25,9 +25,9 @@ class PanouUltimeleStiri extends HTMLElement {
                     color: white;
                     margin-bottom: 1rem;
                     font-size: 2rem;
-                    border-radius: 1rem 0 1rem 0;
-                    border-bottom: 0.1rem solid black;
-                    border-right: 0.1rem solid black;
+                    border-radius: 0 0 ${border_radius_default} 0;
+                    border-bottom: ${border_default};
+                    border-right: ${border_default};
                     padding: 1rem 2rem;
                 }
 
@@ -38,7 +38,7 @@ class PanouUltimeleStiri extends HTMLElement {
                     align-items: center;
                 }
 
-                .button-move-left, .button-move-right {
+                .button-arrow-left, .button-arrow-right {
                     width: 5rem; 
                     height: 2rem;
                     margin: 1rem;
@@ -47,7 +47,7 @@ class PanouUltimeleStiri extends HTMLElement {
                     justify-content: center;
                 }
 
-                .button-move-left img, .button-move-right > img {
+                .button-arrow-left img, .button-arrow-right img {
                     width: 75%;
                     fit-object: cover;
                 }
@@ -90,7 +90,7 @@ class PanouUltimeleStiri extends HTMLElement {
                     Ultimele știri
                 </div>
                 <div class="panou">
-                    <button type="button" class="button-move-left">
+                    <button type="button" class="button-arrow-left">
                         <img src="/static/Images/left-arrow.png">
                     </button>
                     <div class="container-stiri">
@@ -113,7 +113,7 @@ class PanouUltimeleStiri extends HTMLElement {
                             Rezumat stire 6
                         </div>
                     </div>
-                    <button type="button"class="button-move-right">
+                    <button type="button"class="button-arrow-right">
                         <img src="/static/Images/right-arrow.png">
                     </button>
                 </div>
@@ -153,8 +153,8 @@ class PanouUltimeleStiri extends HTMLElement {
     }
 
     addEventListeners() {
-        shadow.querySelector(".button-move-left").addEventListener('click', this.moveLeft); 
-        shadow.querySelector(".button-move-right").addEventListener('click', this.moveRight);
+        shadow.querySelector(".button-arrow-left").addEventListener('click', this.moveRight); 
+        shadow.querySelector(".button-arrow-right").addEventListener('click', this.moveLeft);
     }
 
     connectedCallback() {
@@ -165,5 +165,3 @@ class PanouUltimeleStiri extends HTMLElement {
 }
   
 customElements.define('panou-ultimele-stiri', PanouUltimeleStiri);
-
-//console.log(document.getElementsByTagName("html")[0].getBoundingClientRect());

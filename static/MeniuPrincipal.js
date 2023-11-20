@@ -15,7 +15,7 @@ class MeniuPrincipal extends HTMLElement {
                     flex-direction: row;
                     align-items: center;
                     justify-content: space-around;
-                    height: 10rem;
+                    height: 7rem;
                     width: 100%;
                     border-bottom: 5px solid #F9C74F;
                 }
@@ -51,12 +51,13 @@ class MeniuPrincipal extends HTMLElement {
                 
                 .meniu a:hover{
                     background-color: #36486B;
+                    color: white;
                 }
             </style>
 
             <div class="meniu">
                 <div class="meniu-stanga">
-                    <a href="">Echipa</a>
+                    <a href="/static/PaginaInformatiiEchipa/InformatiiEchipa.html">Echipa</a>
                     <a href="">Calendar</a>
                     <a href="">Clasament</a>
                 </div>

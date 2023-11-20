@@ -23,12 +23,13 @@ class PanouUrmatorulMeci extends HTMLElement {
                     border: ${border_default};
                     font-family: ${font_family_default};
                     font-size: 20px;
+                    overflow: hidden;
                 }
 
                 .header {
                     color: white;
                     background-color: #F3722C;
-                    border-radius: ${border_radius_default} 0px ${border_radius_default} 0px;
+                    border-radius: 0 0 ${border_radius_default} 0;
                     border-bottom: ${border_default};
                     border-right: ${border_default};
                     padding: 10px 50px;

@@ -1,3 +1,5 @@
+let shadow;
+
 class PanouStiri extends HTMLElement {
     render()
     {
@@ -10,7 +12,7 @@ class PanouStiri extends HTMLElement {
 
     constructor() {
         super();
-        this.attachShadow({ mode: "open" });
+        shadow = this.attachShadow({ mode: "open" });
 
         this.render();
     }
