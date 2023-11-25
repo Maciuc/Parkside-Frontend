@@ -27,6 +27,10 @@ class MeniuPrincipal extends HTMLElement {
                     justify-content: center;
                 }
 
+                .logo > a {
+                    display: flex;
+                }
+
                 .meniu-stanga, .meniu-dreapta {
                     width: 40%;
                     height: 55%;
@@ -61,13 +65,17 @@ class MeniuPrincipal extends HTMLElement {
                     <a href="">Calendar</a>
                     <a href="">Clasament</a>
                 </div>
+                
                 <div class="logo">
-                    <img src="/static/Images/logo.png" href="/index.html">
+                    <a href="../../templates/index.html">
+                        <img src="/static/Images/logo.png" alt="Logo">
+                    </a>
                 </div>
+
                 <div class="meniu-dreapta">
                     <a href="">Stiri</a>
                     <a href="">Istorie</a>
-                    <a href="/start.html">Login</a>
+                    <a href="../../templates/start.html">Login</a>
                 </div>
             </div>    
         `;
