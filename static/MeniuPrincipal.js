@@ -73,7 +73,7 @@ class MeniuPrincipal extends HTMLElement {
                 </div>
 
                 <div class="meniu-dreapta">
-                    <a href="">Stiri</a>
+                    <a href="../../static/PaginaStiri/Stiri.html">Stiri</a>
                     <a href="">Istorie</a>
                     <a href="../../templates/start.html">Login</a>
                 </div>
