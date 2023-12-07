@@ -1,4 +1,4 @@
-import {font_family_default,border_default} from "../index.js";
+import {font_family_default,border_default, border_radius_default} from "../index.js";
 
 class InfoCard extends HTMLElement {
     render()
@@ -103,6 +103,18 @@ class InfoCard extends HTMLElement {
         detailedInfo.style.width = "100%";
         detailedInfo.style.height = "100%";
         detailedInfo.style.fontSize = "1rem";
+    }
+
+    showADistinctAppearance() {
+        let card = this.shadowRoot.querySelector(".card");
+        card.style.border = "1rem solid blue";
+        card.style.borderRadius = '1rem';
+    }
+
+    showTheDefaultAppearance() {
+        let card = this.shadowRoot.querySelector(".card");
+        card.style.border = border_default;
+        card.style.borderRadius = '0.25rem';
     }
 
     connectedCallback() {

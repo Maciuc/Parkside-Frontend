@@ -6,18 +6,19 @@ class MeniuPrincipal extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style>
                 .meniu {
+                    z-index: 1;
                     display: flex;
                     position: sticky;
                     top: 0px;
                     left: 0px;
-                    margin-top: 1%;
+                    margin-top: 0.5rem;
                     background-color: white;
                     flex-direction: row;
                     align-items: center;
                     justify-content: space-around;
                     height: 7rem;
                     width: 100%;
-                    border-bottom: 5px solid #F9C74F;
+                    border-bottom: 0.5rem solid #F9C74F;
                 }
 
                 .logo {
@@ -94,3 +95,5 @@ class MeniuPrincipal extends HTMLElement {
   }
   
   customElements.define('meniu-principal', MeniuPrincipal);
+
+  export default MeniuPrincipal;
