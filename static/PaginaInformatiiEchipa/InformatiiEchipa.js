@@ -12,7 +12,7 @@ class InformatiiEchipa extends HTMLElement {
             <style>
                 .interfata-cautare-persoana {
                     z-index: 1; 
-                    //display: none;  
+                    display: none;  
                     position: sticky;
                     width: 100%;
                     top: 7.5rem; //inaltime+grosime_contur meniu
