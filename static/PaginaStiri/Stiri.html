@@ -1,14 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <script src="/static/MeniuPrincipal.js" type="module"></script>
-    <script src="/static/PaginaPrincipala/PanouStiriPrincipale.js" type="module"></script>
+    <!-- <script src="/static/PaginaPrincipala/PanouStiriPrincipale.js" type="module"></script> -->
     <script src="/static/SubsolPrincipal.js" type="module"></script>
     <link rel="stylesheet" href="/static/index.css">
 </head>
 <body>
     <meniu-principal></meniu-principal>
-    <panou-stiri-principale></panou-stiri-principale>
+    <!-- <panou-stiri-principale></panou-stiri-principale> -->
+<style>
+
+    .news-container
+    {
+        display: flex;
+        justify-content: center;
+    }
+
+    .news-content-container {
+        display: flex;
+        margin-bottom: 30px;
+        /* margin-left: 25%; */
+        margin-top:30px;
+        justify-content: center;
+        align-items: center;
+        
+
+        
+    }
+
+    .news-content {
+       
+        margin-right: 60px;
+        width:70%;
+    }
+
+    .news-image {
+    
+        flex-shrink: 0;
+        width: 150px;
+        height:150px;
+        /* margin-right: 100px;    */
+    }
+
+    img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block; /* Ensure the image is treated as a block element */
+    }
+
+    .read-more-btn {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 0.5rem;
+    }
+</style>
+
+<body>
+
+<!-- <h1 style="margin-left: 40%; margin-button:50px;" >Ultimele știri</h1> -->
+
+<div class="news-container">
+<div class="news-content-container">
+    <div class="news-content">
+        <p>acum o zi</p>
+        <h2>Titlu știre</h2>
+        <p>Text parțial știre. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum dignissim velit vel elementum...</p>
+        <a href="#" class="read-more-btn">👉 Află mai multe</a>
+        <p>Autor: Marian Marian</p>
+    </div>
+    <img src="https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM=" alt="News Image" class="news-image">
+</div>
+</div>
+
+<div class="news-container">
+    <div class="news-content-container">
+        <div class="news-content">
+            <p>acum o zi</p>
+            <h2>Titlu știre</h2>
+            <p>Text parțial știre. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum dignissim velit vel elementum...</p>
+            <a href="#" class="read-more-btn">👉 Află mai multe</a>
+            <p>Autor: Marian Marian</p>
+        </div>
+        <img src="https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM=" alt="News Image" class="news-image">
+    </div>
+    </div>
+
+    <div class="news-container">
+        <div class="news-content-container">
+            <div class="news-content">
+                <p>acum o zi</p>
+                <h2>Titlu știre</h2>
+                <p>Text parțial știre. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum dignissim velit vel elementum...</p>
+                <a href="#" class="read-more-btn">👉 Află mai multe</a>
+                <p>Autor: Marian Marian</p>
+            </div>
+            <img src="https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM=" alt="News Image" class="news-image">
+        </div>
+        </div>
+
+<div class="news-container">
+<div class="news-content-container">
+    <div class="news-content">
+        <p>acum o zi</p>
+        <h2>Titlu știre</h2>
+        <p>Text parțial știre. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum dignissim velit vel elementum...</p>
+        <a href="#" class="read-more-btn">👉 Află mai multe</a>
+        <p>Autor: Marian Marian</p>
+    </div>
+    <img src="https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM=" alt="News Image" class="news-image">
+</div>
+</div>
+
+<div class="news-container">
+    <div class="news-content-container">
+        <div class="news-content">
+            <p>acum o zi</p>
+            <h2>Titlu știre</h2>
+            <p>Text parțial știre. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum dignissim velit vel elementum...</p>
+            <a href="#" class="read-more-btn">👉 Află mai multe</a>
+            <p>Autor: Marian Marian</p>
+        </div>
+        <img src="https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM=" alt="News Image" class="news-image">
+    </div>
+    </div>
+<!-- Add more news items as needed -->
     <subsol-principal></subsol-principal>
 </body>
 </html>
