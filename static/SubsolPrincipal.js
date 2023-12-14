@@ -9,7 +9,7 @@ class SubsolPrincipal extends HTMLElement {
             <style>
                 .panou {
                     margin-top: 4%;
-                    border-top: 5px solid #F9C74F;
+                    border-top: 5px solid #3E4095;
                     font-family: ${font_family_default};
                     display: flex;
                     flex-direction: column;
@@ -18,9 +18,9 @@ class SubsolPrincipal extends HTMLElement {
                 .title {
                     float: left;
                     width: fit-content;
-                    color: black;
+                    color: white;
                     font-size: 2rem;
-                    background-color: #F9C74F;
+                    background-color: #3E4095;
                     padding: 2rem 4rem;
                     border-radius: 0 0 ${border_radius_default} 0;
                 }
@@ -49,7 +49,7 @@ class SubsolPrincipal extends HTMLElement {
                     Sponsori și parteneri
                 </div>
                 <div>
-                    <button class="button-contact" onclick="location.href='/feedback.html'">
+                    <button class="button-contact" onclick="location.href='/templates/feedback.html'">
                         CONTACTEAZĂ-NE
                     </button>
                     <button class="button-inapoi-sus">
@@ -77,3 +77,5 @@ class SubsolPrincipal extends HTMLElement {
 }
   
 customElements.define('subsol-principal', SubsolPrincipal);
+
+export default SubsolPrincipal;

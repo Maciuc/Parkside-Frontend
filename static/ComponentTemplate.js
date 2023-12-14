@@ -3,7 +3,7 @@ let shadow;
 class PanouStiri extends HTMLElement {
     render()
     {
-        this.shadowRoot.innerHTML = `
+        shadow.innerHTML = `
             <style>
                 
             </style>

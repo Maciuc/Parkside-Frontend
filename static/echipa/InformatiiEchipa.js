@@ -1,7 +1,13 @@
 import InfoCard from "./InfoCard.js";
-import MeniuPrincipal from "../MeniuPrincipal.js";
+import MeniuPrincipal, {afterMenuShownEventHandler, beforeHidingMenuEventHandler, blockMenuHidding, unblockMenuHidding} from "../MeniuPrincipal.js";
+import SubsolPrincipal from "../SubsolPrincipal.js";
 
 let shadow;
+
+/**
+ * id-ul prin care poate fi identificata componenta ce nu permite meniului sa fie ascuns
+ */
+const masterID = 1;
 
 class InformatiiEchipa extends HTMLElement {
     referintePersoaneFiltrate = [];//referinte catre cartonasele cu bordura distincta
@@ -15,12 +21,12 @@ class InformatiiEchipa extends HTMLElement {
                     display: none;  
                     position: sticky;
                     width: 100%;
-                    top: 7.5rem; //inaltime+grosime_contur meniu
-                    
+                    top: 7.35rem; //inaltime+grosime_contur meniu
                     font-size: 1.5rem;
                     background-color: white;
-                    padding: 5rem 0 3rem 0;
-                    border-bottom: 0.1rem solid black;
+                    padding: 4rem 0 3rem 0;
+                    border-bottom: 0.35rem solid #3E4095;
+                    transition: all linear 0.4s;
                 }
 
                 .interfata-cautare-persoana select {
@@ -55,17 +61,18 @@ class InformatiiEchipa extends HTMLElement {
                 }
 
                 .stuff-container {
+                    padding: 0 10%;
                     display: flex;
                     align-items: center;
                     flex-direction: row;
                     justify-content: space-around;  
                     flex-wrap: wrap;
-                    gap: 5rem;
+                    gap: 10rem;
                     margin-top: 2rem;
                 }    
             </style>
 
-            <div class="page">
+            <div class="component">
                 <meniu-principal>
                 </meniu-principal>
                 <div class="interfata-cautare-persoana">
@@ -100,6 +107,8 @@ class InformatiiEchipa extends HTMLElement {
                 </div>
                 <div class="stuff-container">
                 </div>
+                <subsol-principal>
+                </subsol-principal>
             </div>
         `;
     }
@@ -404,7 +413,33 @@ class InformatiiEchipa extends HTMLElement {
         }
     }
 
+    seteazaZIndexulMeniului(zIndexValue) {
+        let referintaMeniu = document.querySelector("informatii-echipa").shadowRoot.querySelector("meniu-principal").shadowRoot.querySelector(".meniu");
+        referintaMeniu.style.zIndex = zIndexValue;
+    }
+
     connectedCallback() {
+        afterMenuShownEventHandler.push(()=>{
+            let referintaInterfataCautare = shadow.querySelector(".interfata-cautare-persoana");
+            referintaInterfataCautare.style.top = '7.35rem';
+        });
+
+        beforeHidingMenuEventHandler.push(()=>{
+            let referintaInterfataCautare = shadow.querySelector(".interfata-cautare-persoana");
+
+            if(referintaInterfataCautare.style.display !== '') {
+                blockMenuHidding(masterID);//componenta curenta blocheaza ascunderea meniului
+                
+                this.seteazaZIndexulMeniului(1);
+
+                referintaInterfataCautare.style.top = '0rem';
+            }
+        });
+
+        shadow.querySelector(".interfata-cautare-persoana").addEventListener('trasitionend',()=>{
+            unblockMenuHidding(masterID);//componenta curenta nu mai blocheaza ascunderea meniului
+        });
+
         let numeCampionatDefault = this.returneazaNumeleCampionatuluiDefault();
         this.selecteazaCampionatulDefaultInCampulDeSelectieAlCampionatului();
 
