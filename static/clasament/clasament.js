@@ -153,3 +153,28 @@ class ComponentaClasament extends HTMLElement {
 }
   
 customElements.define('componenta-clasament', ComponentaClasament);
+
+/*const queryParams = {
+    nameSearch: 'value1',
+    param2: 'value2'
+  };
+
+fetch('https://localhost:7260/api/getPlayers?nameSearch=Ionescu&columnToSort=0&pageNumber=1&pageSize=10',{
+    method: 'GET',	
+    headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    },
+    mode: 'no-cors'
+})
+.then(function (response) {
+    if(response.ok) {
+        return response.json();
+    }else {
+        return Promise.reject(response);
+    }
+}).then(function (data) {
+    console.log(data);
+}).catch(function (err) {
+    console.log('Error: ',err)
+});*/

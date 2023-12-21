@@ -5,6 +5,10 @@ class InfoCard extends HTMLElement {
     {
         this.shadowRoot.innerHTML = `
             <style>
+                a.referinta-pagina-detalii {
+                    text-decoration: none;
+                }
+
                 .card {
                     display: flex;
                     flex-direction: column;
@@ -63,6 +67,7 @@ class InfoCard extends HTMLElement {
 
                 .main-info {
                     font-size: 1.5rem;
+                    color: black;
                 }
 
                 .content {
@@ -70,17 +75,19 @@ class InfoCard extends HTMLElement {
                 }
             </style>
 
-            <div class="card">
-                <div class="top">
-                    <div class="img-container">
-                        <img src="/static/Images/stire1_1.jpg">
+            <a class="referinta-pagina-detalii">
+                <div class="card">
+                    <div class="top">
+                        <div class="img-container">
+                            <img src="/static/imagini/stire1_1.jpg">
+                        </div>
+                        <div class="detailed-info">
+                        </div>
                     </div>
-                    <div class="detailed-info">
+                    <div class="main-info">
                     </div>
-                </div>
-                <div class="main-info">
-                </div>
-            </div>
+              </div>
+            </a>
         `;
     }
 

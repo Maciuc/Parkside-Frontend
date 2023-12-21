@@ -91,7 +91,7 @@ class PanouUltimeleStiri extends HTMLElement {
                 </div>
                 <div class="panou">
                     <button type="button" class="button-arrow-left">
-                        <img src="/static/Images/left-arrow.png">
+                        <img src="/static/imagini/left-arrow.png">
                     </button>
                     <div class="container-stiri">
                         <div class="stire">
@@ -114,7 +114,7 @@ class PanouUltimeleStiri extends HTMLElement {
                         </div>
                     </div>
                     <button type="button"class="button-arrow-right">
-                        <img src="/static/Images/right-arrow.png">
+                        <img src="/static/imagini/right-arrow.png">
                     </button>
                 </div>
             </div>

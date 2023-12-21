@@ -1,5 +1,5 @@
 import InfoCard from "./InfoCard.js";
-import MeniuPrincipal, {afterMenuShownEventHandler, beforeHidingMenuEventHandler, blockMenuHidding, unblockMenuHidding} from "../MeniuPrincipal.js";
+import MeniuPrincipal from "../MeniuPrincipal.js";
 import SubsolPrincipal from "../SubsolPrincipal.js";
 
 let shadow;
@@ -17,16 +17,13 @@ class InformatiiEchipa extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style>
                 .interfata-cautare-persoana {
-                    z-index: 1; 
                     display: none;  
                     position: sticky;
                     width: 100%;
-                    top: 7.35rem; //inaltime+grosime_contur meniu
                     font-size: 1.5rem;
                     background-color: white;
                     padding: 4rem 0 3rem 0;
                     border-bottom: 0.35rem solid #3E4095;
-                    transition: all linear 0.4s;
                 }
 
                 .interfata-cautare-persoana select {
@@ -74,32 +71,32 @@ class InformatiiEchipa extends HTMLElement {
 
             <div class="component">
                 <meniu-principal>
-                </meniu-principal>
-                <div class="interfata-cautare-persoana">
-                    <div class="user-input">
-                        <div class="user-input-group">
-                            <label for="select-nume">Nume:</label>
-                            <select id="select-nume">
-                            </select>
+                    <div class="interfata-cautare-persoana">
+                        <div class="user-input">
+                            <div class="user-input-group">
+                                <label for="select-nume">Nume:</label>
+                                <select id="select-nume">
+                                </select>
+                            </div>
+                            <div class="user-input-group">
+                                <label for="select-prenume">Prenume:</label>
+                                <select id="select-prenume">
+                                    <option value="none" selected disabled hidden>
+                                        Selecteaza un prenume
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="user-input-group">
+                                <label for="select-campionat">Campionat:</label>
+                                <select id="select-campionat">
+                                </select>
+                            </div>
                         </div>
-                        <div class="user-input-group">
-                            <label for="select-prenume">Prenume:</label>
-                            <select id="select-prenume">
-                                <option value="none" selected disabled hidden>
-                                    Selecteaza un prenume
-                                </option>
-                            </select>
-                        </div>
-                        <div class="user-input-group">
-                            <label for="select-campionat">Campionat:</label>
-                            <select id="select-campionat">
-                            </select>
-                        </div>
+                        <button type="button" class="button-ascunde-interfata-de-cautare">
+                            Ascunde interfata
+                        </button>
                     </div>
-                    <button type="button" class="button-ascunde-interfata-de-cautare">
-                        Ascunde interfata
-                    </button>
-                </div>
+                </meniu-principal>
                 <div style="display: flex; flex-direction: row-reverse;">
                     <button type="button" class="button-cautare">
                         Caută
@@ -130,6 +127,7 @@ class InformatiiEchipa extends HTMLElement {
             case "Liga Nationala '23-'24":
                 return [
                     {
+                        id: 1,
                         Nume: "Gheorghescu",
                         Prenume: "Gheorghe",
                         Numar: "7",
@@ -137,6 +135,7 @@ class InformatiiEchipa extends HTMLElement {
         
                     },
                     {
+                        id: 2,
                         Nume: "Zamfirescu",
                         Prenume: "Zamfir",
                         Numar: "9",
@@ -146,12 +145,14 @@ class InformatiiEchipa extends HTMLElement {
             case "Supercupa Romaniei '23-'24":
                 return [
                     {
+                        id: 3,
                         Nume: "Ionescu",
                         Prenume: "Ion",
                         Numar: "4",
                         Inaltime: "1.75 m"
                     },
                     {
+                        id: 4,
                         Nume: "Ionescu",
                         Prenume: "Ionut",
                         Numar: "10",
@@ -197,14 +198,19 @@ class InformatiiEchipa extends HTMLElement {
 
         shadow.querySelector(".stuff-container").innerHTML = '';//eliminarea informatiilor afisate despre staff
 
-        for(let k=0;k<10;k++)
+        for(let n=0;n<10;n++)
         for(let i=0;i<jsonList.length;i++) {
             let persoana = jsonList[i];
 
             let infoCard = document.createElement('info-card');
-            let k=0;
-            for(let caracteristica in persoana) {
-                if(k++ < numarInformatiiPrincipaleAfisate) {
+            infoCard.shadowRoot.querySelector(".referinta-pagina-detalii").href = `personal/personal.html?id=${persoana['id']}`;
+
+            const keys = Object.keys(persoana);
+
+            for(let k=1;k<keys.length;k++) {
+                let caracteristica = keys[k];
+
+                if(k < numarInformatiiPrincipaleAfisate + 1) {
                     infoCard.shadowRoot.querySelector(".main-info").innerHTML += `
                         <div class="content">
                             <b>${caracteristica}:</b> ${persoana[caracteristica]}
@@ -419,27 +425,6 @@ class InformatiiEchipa extends HTMLElement {
     }
 
     connectedCallback() {
-        afterMenuShownEventHandler.push(()=>{
-            let referintaInterfataCautare = shadow.querySelector(".interfata-cautare-persoana");
-            referintaInterfataCautare.style.top = '7.35rem';
-        });
-
-        beforeHidingMenuEventHandler.push(()=>{
-            let referintaInterfataCautare = shadow.querySelector(".interfata-cautare-persoana");
-
-            if(referintaInterfataCautare.style.display !== '') {
-                blockMenuHidding(masterID);//componenta curenta blocheaza ascunderea meniului
-                
-                this.seteazaZIndexulMeniului(1);
-
-                referintaInterfataCautare.style.top = '0rem';
-            }
-        });
-
-        shadow.querySelector(".interfata-cautare-persoana").addEventListener('trasitionend',()=>{
-            unblockMenuHidding(masterID);//componenta curenta nu mai blocheaza ascunderea meniului
-        });
-
         let numeCampionatDefault = this.returneazaNumeleCampionatuluiDefault();
         this.selecteazaCampionatulDefaultInCampulDeSelectieAlCampionatului();
 
