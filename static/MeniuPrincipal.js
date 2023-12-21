@@ -70,7 +70,7 @@ class MeniuPrincipal extends HTMLElement {
             <div class="container-meniu">
                 <div class="meniu">
                     <div class="logo">
-                        <a href="../../templates/home.html">
+                        <a href="/home.html">
                             <img src="/static/imagini/logo.png" alt="Logo">
                         </a>
                     </div>
