@@ -2,4 +2,11 @@
 
 export const font_family_default = `"Lucida Console", "Monaco", monospace`;
 export const border_default = `0.1rem solid black`;
-export const border_radius_default = `1rem`;
+export const border_radius_default = `0.5rem`;
+
+let favicon = document.createElement("link");
+favicon.setAttribute("rel","icon");
+favicon.setAttribute("type","image/x-icon");
+favicon.setAttribute("href","/static/imagini/logo.png");
+
+document.head.appendChild(favicon);//set favicon to page

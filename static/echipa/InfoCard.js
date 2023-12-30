@@ -1,6 +1,14 @@
 import {font_family_default,border_default, border_radius_default} from "../index.js";
 
 class InfoCard extends HTMLElement {
+    static get observedAttributes() {
+        return ["imagine"];
+    }
+
+    get imagine() {
+        return this.getAttribute("imagine");
+    }
+
     render()
     {
         this.shadowRoot.innerHTML = `
@@ -13,7 +21,7 @@ class InfoCard extends HTMLElement {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    width: 17rem;
+                    width: fit-content;
                     height: 30rem;
                     border: ${border_default};
                     border-radius: 0.25rem;
@@ -27,7 +35,7 @@ class InfoCard extends HTMLElement {
                 }
 
                 .img-container {
-                    display: flex;
+                    display: flex;;
                     justify-content: center;
                     overflow: hidden;
                     width: 100%;
@@ -38,8 +46,6 @@ class InfoCard extends HTMLElement {
                     background-color: black;
                     display: fixed;
                     position: absolute;
-                    top: 0;
-                    float: left;
                     width: 0;
                     height: 0;
                     transition: all 0.5s ease-out;
@@ -55,6 +61,7 @@ class InfoCard extends HTMLElement {
 
                 img {
                     object-fit: cover; 
+                    transition: transform ease-out 0.5s;
                 }
 
                 .main-info, .detailed-info {
@@ -79,9 +86,9 @@ class InfoCard extends HTMLElement {
                 <div class="card">
                     <div class="top">
                         <div class="img-container">
-                            <img src="/static/imagini/stire1_1.jpg">
-                        </div>
-                        <div class="detailed-info">
+                            <img>
+                            <div class="detailed-info">
+                            </div>
                         </div>
                     </div>
                     <div class="main-info">
@@ -124,9 +131,20 @@ class InfoCard extends HTMLElement {
         card.style.borderRadius = '0.25rem';
     }
 
+    enlargeTheImage() {
+        this.shadowRoot.querySelector(".img-container img").style.transform = "scale(1.1,1.1)";
+    }
+
+    shrinkTheImage() {
+        this.shadowRoot.querySelector(".img-container img").style.transform = "scale(1,1)";
+    }
+
     connectedCallback() {
+        this.shadowRoot.querySelector(".img-container img").src = this.imagine;
         this.shadowRoot.querySelector(".top").addEventListener(`mouseenter`,this.showDetailedInfo);
         this.shadowRoot.querySelector(".top").addEventListener(`mouseleave`,this.hideDetailedInfo);
+        this.shadowRoot.querySelector("a.referinta-pagina-detalii").addEventListener(`mouseenter`,this.enlargeTheImage.bind(this));
+        this.shadowRoot.querySelector("a.referinta-pagina-detalii").addEventListener(`mouseleave`,this.shrinkTheImage.bind(this));
     }
 }
   

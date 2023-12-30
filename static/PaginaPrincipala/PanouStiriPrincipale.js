@@ -9,55 +9,68 @@ const numarStiriDeAfisat = 3;
 var stiriDeAfisat = [];
 var indexStireCurenta = 0;
 
-var referintaPanouStiri;
-
-
 class PanouStiriPrincipale extends HTMLElement {
+    indexContainerCurent = 0;
+    containere;
+
     render()
     {
         this.shadowRoot.innerHTML = `
             <style>
-                .stire {
+                .panou {
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
                     align-items: center;
-                    background-color: #90BE6D;
-                    border-radius: ${border_radius_default};
-                    border: ${border_default};
-                    margin: 1% 12rem;
-                    height: 600px; 
+                    position: relative;
+                    overflow: hidden;
+                    margin: 1% 0;
+                    height: 55rem;
                 }
 
-                .stire > img {
-                    width: 60%;
+                .panou img {
+                    width: 100%;
                     object-fit: cover;
+                    height: 75%;
+                    filter: brightness(0.75);
+                }
+
+                .container {
+                    position: absolute;
                     height: 100%;
-                    border-radius: ${border_radius_default} 0px 0px ${border_radius_default};
-                    border-right: 1px solid black;
+                    transition: opacity 2.3s;
                 }
 
                 .informatii-stire {
-                    width: 40%;
+                    width: 100%;
+                    height: 25%;
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: #3E4095;
                 }
 
                 .rezumat-stire {
-                    color: black;
-                    padding: 0px 25px;
-                    margin: 10% 5%;
+                    color: white;
+                    padding: 1rem 0;
                     font-family: ${font_family_default};
                     font-size: 2rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 1rem 2rem;
                 }
 
                 .button-citeste-stirea {
-                    background-color: #FEFBD8;
-                    float: right;
-                    width: 10rem;
-                    height: 4rem;
-                    margin-right: 10%;
+                    position: absolute;
+                    bottom: 1rem;
+                    right: 1rem;
+                    width: 7rem;
+                    height: 3rem;
                     border-width: 0.25rem;
-                    border-radius: 2rem;
+                    border-radius: 0.5rem;
                     font-family: ${font_family_default};
-                    font-size: 1.5rem;
+                    font-size: 1.2rem;
                 }
 
                 .button-citeste-stirea:hover {
@@ -68,36 +81,18 @@ class PanouStiriPrincipale extends HTMLElement {
                 .grup-index-stire {
                     position: absolute;
                 }
-
-                @media screen and (max-width: 1200px) {
-                    .stire {
-                        flex-direction: column;
-                        height: fit-content;
-                    }
-
-                    .stire > img {
-                        width: 100%;
-                        border-radius: ${border_radius_default} ${border_radius_default} 0 0;
-                        border-right: none;
-                        border-bottom: 1px solid black;
-                    }
-
-                    .informatii-stire {
-                        width: 100%;
-                    }
-
-                    .rezumat-stire {
-                        margin: 5%;
-                    }
-
-                    .button-citeste-stirea {
-                        margin-bottom: 2.5%;
-                    }
-                }
             </style>
 
             <div class="panou">
-                <div class="stire">
+                <div class="container" style="opacity: 0; z-index: -1;">
+                    <img>
+                    <div class="informatii-stire">
+                        <div class="rezumat-stire">
+                        </div>
+                        <button type="button" class="button-citeste-stirea">detalii</button>
+                    </div>
+                </div>
+                <div class="container" style="opacity: 1; z-index:0;">
                     <img src="${stiriDeAfisat[indexStireCurenta].caleImagine}">
                     <div class="informatii-stire">
                         <div class="rezumat-stire">
@@ -127,20 +122,25 @@ class PanouStiriPrincipale extends HTMLElement {
     afiseazaUrmatoareaStire() {
         indexStireCurenta = (indexStireCurenta + 1) % numarStiriDeAfisat;
 
-        referintaPanouStiri.shadowRoot.querySelector("img").src = stiriDeAfisat[indexStireCurenta].caleImagine;
-        referintaPanouStiri.shadowRoot.querySelector(".rezumat-stire").innerText = stiriDeAfisat[indexStireCurenta].rezumatStire;
+        const containerCurent = this.containere[this.indexContainerCurent];
+
+        containerCurent.style.opacity = 0;
+        containerCurent.querySelector("img").src = stiriDeAfisat[indexStireCurenta].caleImagine;
+        containerCurent.querySelector(".rezumat-stire").innerText = stiriDeAfisat[indexStireCurenta].rezumatStire;
+        containerCurent.style.zIndex = 0;
+
+        this.indexContainerCurent = (this.indexContainerCurent + 1) % 2;
+        this.containere[this.indexContainerCurent].style.zIndex = -1;
+        this.containere[this.indexContainerCurent].style.opacity = 0;
+
+        containerCurent.style.opacity = 1;
     }
 
     connectedCallback() {
-        referintaPanouStiri = document.getElementsByTagName("panou-stiri-principale")[0];
+        this.containere = this.shadowRoot.querySelectorAll(".container");
+
+        setInterval(this.afiseazaUrmatoareaStire.bind(this), 5000);
     }
   }
   
 customElements.define('panou-stiri-principale', PanouStiriPrincipale);
-
-
-function afiseazaUrmatoareaStire() {
-    referintaPanouStiri.afiseazaUrmatoareaStire();
-}
-
-setInterval(afiseazaUrmatoareaStire, 5000);

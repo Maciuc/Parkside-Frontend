@@ -22,8 +22,7 @@ class MeniuPrincipal extends HTMLElement {
                     flex-direction: row;
                     align-items: center;
                     height: 5rem;
-                    transition: box-shadow linear 0.5s; 
-                    box-shadow: 0px 2px 5px grey;
+                    box-shadow: 0px 2px 0.5rem grey;
                     margin-bottom: 5px;
                 }
 
@@ -70,7 +69,7 @@ class MeniuPrincipal extends HTMLElement {
             <div class="container-meniu">
                 <div class="meniu">
                     <div class="logo">
-                        <a href="/index.html">
+                        <a href="/acasa.html">
                             <img src="/static/imagini/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -102,15 +101,12 @@ class MeniuPrincipal extends HTMLElement {
     adaugaRutinaDeTratareAEvenimentuluiDeDefilareAPaginii() {
         window.addEventListener ("wheel",(WheelEvent) => {
             let referintContaineraMeniu = this.shadowRoot.querySelector(".container-meniu");
-            let referintaMeniu = this.shadowRoot.querySelector(".meniu");
 
             if(WheelEvent.deltaY > 0) {
-                referintContaineraMeniu.style.top = '-5rem';
-                referintaMeniu.style.boxShadow = 'none';
+                referintContaineraMeniu.style.top = '-5.5rem';
             }
             else {
                 referintContaineraMeniu.style.top = '0rem';
-                referintaMeniu.style.boxShadow = '0px 2px 5px grey';
             }
         });
     }
