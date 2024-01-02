@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Example</title>
+    <link rel="stylesheet"
+          href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="functions" href="functions.js">
+</head>
+<body>
+    <div class="header">
+        <div class="menu">
+            <div class="button">Echipa</div>
+            <div class="button">Calendar</div>
+            <div class="button">Clasament</div>
+            <div class="logo">
+                <img src="D:\IP\Logo_CSU_Suceava.png" alt="Logo" width="100" height="auto" >
+            </div>
+            <div class="button">Stiri</div>
+            <div class="button" onclick="openPage('history.html')">Istorie</div>
+            <div class="button">Log in</div>
+         </div>
+        <div class="gray-line"></div>
+    </div>  
+    <div class="log">
+        <form style="max-width:450px;margin:auto">
+            <h2>Log in</h2>
+            <div class="input-icons">
+                <i class="fa fa-envelope icon">
+                </i>
+                <input class="input-field"
+                    type="text"
+                    placeholder="Email" required>
+            </div>
+    
+            <div class="input-icons">
+                <label for="text"></label><br>
+                <i class="fa fa-key icon">
+                </i>
+                <input class="input-field"
+                    type="password"
+                    placeholder="Parola" required>
+            </div>
+            <input type="checkbox">
+            <label for="checkbox">Raman autentificat</label>
+            <button type="submit">Log in</button>
+         </form>
+    </div>    
+    <script src="functions.js"></script>     
+</body>
+</html>
