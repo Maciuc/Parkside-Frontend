@@ -1,0 +1,180 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.input-icons i {
+    position: absolute;
+}
+ 
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+ 
+.icon {
+    padding: 10px;
+    color: rgb(40, 158, 217);
+    min-width: 50px;
+    text-align: center;
+}
+.input-field {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+
+}
+ 
+h2 {
+    color: #003049;
+}
+
+.test
+{
+    display: flex;
+    justify-content: space-around;
+}
+label
+{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgba(151, 149, 151, 0.768);
+}
+.input-field {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+    border-color: rgb(171, 163, 163);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgba(151, 149, 151, 0.768);
+}
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #fff;
+    z-index: 1000; /* Make sure it's above other elements */
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    color: #040303;
+    padding: 10px;
+    
+}
+
+.button {
+    width: 130px;
+    background: transparent;
+    border: 2px solid #003049;
+    border-radius: 20px;
+    height: 30px;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #003049;
+    font-weight: 600;
+    margin-left: 40px;
+    text-align: center;
+    
+}
+
+.button:hover {
+    background-color:slategray;
+}
+
+.gray-line {
+    background-color:#003049; /* Gray color for the line */
+    height: 5px; /* Height of the line */
+    width: 100%; /* Full width of the page */
+}
+
+.content {
+    margin-top: 80px; /* Adjust this value to create space below the fixed menu */
+    /* Add any additional styles for your main content here */
+}
+
+label
+{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgba(151, 149, 151, 0.768);
+}
+
+
+.log
+{
+    background-color: white;
+    height: 300px;
+    width: 300px;
+    text-align: center; 
+    justify-content: center;
+}
+
+/*.historypage
+{
+    background-color: white;
+    height: 2000px;
+    width: 1000px;
+    text-align: center; 
+    justify-content: center;
+    z-index: 500;
+} */
+
+
+.log .button {
+    width: 130px;
+    background: transparent;
+    border: 2px solid #003049;
+    border-radius: 20px;
+    height: 30px;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #003049;
+    font-weight: 600;
+    margin-left: 40px;
+    text-align: center;
+    
+}
+
+.input-field
+{
+    width: 250px;
+}
+
+.checkbox
+{
+    justify-content: left;
+}
+
+body
+{
+    background-image: url('historybackvar1.jpg');
+}
+
+.historypage .p{
+    color: #003049;
+    font-size: 1.1em;
+    z-index: 2000;
+    font-weight: 600;
+    text-align: justify;
+}
+
+.tab {
+     margin-block-start: 1em;
+     margin-left: 50px; 
+     margin-right: 50px;
+     tab-size: 4;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
