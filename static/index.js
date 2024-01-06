@@ -7,6 +7,6 @@ export const border_radius_default = `0.5rem`;
 let favicon = document.createElement("link");
 favicon.setAttribute("rel","icon");
 favicon.setAttribute("type","image/x-icon");
-favicon.setAttribute("href","/static/imagini/logo.png");
+favicon.setAttribute("href","/static/imagini/logo.ico");
 
 document.head.appendChild(favicon);//set favicon to page

@@ -8,7 +8,6 @@ class SubsolPrincipal extends HTMLElement {
                 .panou {
                     font-family: ${font_family_default};
                     background-color: white;
-                    margin-top: 4rem;
                 }
 
                 .title {
@@ -86,6 +85,10 @@ class SubsolPrincipal extends HTMLElement {
 
                 .date-contact {
                     flex-direction: column;
+                }
+
+                .social-media {
+                    gap: 3rem;
                 }
 
                 .date-contact p {
@@ -198,7 +201,8 @@ class SubsolPrincipal extends HTMLElement {
 
     returneazaDateleDeSocialMedia() {
         return [
-            ["/static/imagini/social-media/facebook.png","https://www.facebook.com/CSUSuceava/?locale=ro_RO"]
+            ["/static/imagini/social-media/facebook.png","https://www.facebook.com/CSUSuceava/?locale=ro_RO"],
+            ["/static/imagini/social-media/instagram.png","https://www.instagram.com/csusuceava/?hl=ro"]
         ];
     }
 

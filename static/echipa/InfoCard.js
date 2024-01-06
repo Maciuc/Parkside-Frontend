@@ -21,37 +21,52 @@ class InfoCard extends HTMLElement {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    width: fit-content;
-                    height: 30rem;
+                    width: 20rem;
+                    height: 35rem;
                     border: ${border_default};
                     border-radius: 0.25rem;
                     padding: 0.3rem;
                 }
 
                 .top {
-                    position: relative;
                     height: 80%; 
                     width: 100%;
+                    perspective: 2000px;
                 }
 
-                .img-container {
-                    display: flex;;
-                    justify-content: center;
-                    overflow: hidden;
+                .flip-image {
+                    position: relative;
+                    transition: transform ease-in-out 0.8s;
+                    transform-style: preserve-3d;
                     width: 100%;
                     height: 100%;
                 }
 
-                .detailed-info {
-                    background-color: black;
-                    display: fixed;
-                    position: absolute;
-                    width: 0;
-                    height: 0;
-                    transition: all 0.5s ease-out;
-                    color: white;
-                    font-size: 0;
+                .top:hover .flip-image{
+                    transform: rotateY(-180deg);
                 }
+
+                .img-container {
+                    display: flex;
+                    position: absolute;
+                    justify-content: center;
+                    overflow: hidden;
+                    width: 100%;
+                    height: 100%;
+                    backface-visibility: hidden;
+                }
+
+                .detailed-info {
+                    transform: rotateY(180deg);
+                    background-color: black;
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    color: white;
+                    font-size: 1rem;
+                    backface-visibility: hidden;
+                }
+                
 
                 .detailed-info .content {
                     margin: 0.25rem 1rem;
@@ -60,8 +75,9 @@ class InfoCard extends HTMLElement {
                 }
 
                 img {
-                    object-fit: cover; 
-                    transition: transform ease-out 0.5s;
+                    object-fit: contain; 
+                    width: 100%;
+                    height: 100%;
                 }
 
                 .main-info, .detailed-info {
@@ -69,24 +85,26 @@ class InfoCard extends HTMLElement {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    height: 20%;
                 }
 
                 .main-info {
                     font-size: 1.5rem;
                     color: black;
+                    height: 20%;
                 }
 
-                .content {
-                    margin: 0.55rem 0;   
+                .main-info .content {
+                    margin: 0.55rem 0;
                 }
             </style>
 
             <a class="referinta-pagina-detalii">
                 <div class="card">
                     <div class="top">
-                        <div class="img-container">
-                            <img>
+                        <div class="flip-image">
+                            <div class="img-container">
+                                <img>
+                            </div>
                             <div class="detailed-info">
                             </div>
                         </div>
@@ -105,20 +123,6 @@ class InfoCard extends HTMLElement {
         this.render();
     }
 
-    hideDetailedInfo() {
-        let detailedInfo = this.querySelector(".detailed-info");
-        detailedInfo.style.width = "0%";
-        detailedInfo.style.height = "0%";
-        detailedInfo.style.fontSize = "0px";
-    }
-    
-    showDetailedInfo() {
-        let detailedInfo = this.querySelector(".detailed-info");
-        detailedInfo.style.width = "100%";
-        detailedInfo.style.height = "100%";
-        detailedInfo.style.fontSize = "1rem";
-    }
-
     showADistinctAppearance() {
         let card = this.shadowRoot.querySelector(".card");
         card.style.border = "1rem solid blue";
@@ -131,20 +135,8 @@ class InfoCard extends HTMLElement {
         card.style.borderRadius = '0.25rem';
     }
 
-    enlargeTheImage() {
-        this.shadowRoot.querySelector(".img-container img").style.transform = "scale(1.1,1.1)";
-    }
-
-    shrinkTheImage() {
-        this.shadowRoot.querySelector(".img-container img").style.transform = "scale(1,1)";
-    }
-
     connectedCallback() {
         this.shadowRoot.querySelector(".img-container img").src = this.imagine;
-        this.shadowRoot.querySelector(".top").addEventListener(`mouseenter`,this.showDetailedInfo);
-        this.shadowRoot.querySelector(".top").addEventListener(`mouseleave`,this.hideDetailedInfo);
-        this.shadowRoot.querySelector("a.referinta-pagina-detalii").addEventListener(`mouseenter`,this.enlargeTheImage.bind(this));
-        this.shadowRoot.querySelector("a.referinta-pagina-detalii").addEventListener(`mouseleave`,this.shrinkTheImage.bind(this));
     }
 }
   

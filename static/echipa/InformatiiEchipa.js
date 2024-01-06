@@ -179,7 +179,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "95",
                         Inaltime: "1.83 m",
                         rol: "PORTAR",
-                        imagine: "/static/imagini/staff/LeonteȘtefan_PO.jpg"
+                        imagine: "/static/imagini/staff/LeonteȘtefan_PO.png"
                     },
                     {
                         id: 3,
@@ -188,7 +188,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "89",
                         Inaltime: "1.83 m",
                         rol: "INTER STÂNGA",
-                        imagine: "/static/imagini/staff/ReuțAlexandru_IS.jpg"
+                        imagine: "/static/imagini/staff/ReuțAlexandru_IS.png"
                     },
                     {
                         id: 4,
@@ -197,7 +197,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "27",
                         Inaltime: "1.83 m",
                         rol: "EXTREMĂ DREAPTĂ",
-                        imagine: "/static/imagini/staff/RusuEduard_ED.jpg"
+                        imagine: "/static/imagini/staff/RusuEduard_ED.png"
                     },
                     {
                         id: 5,
@@ -206,7 +206,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "24",
                         Inaltime: "1.83 m",
                         rol: "PIVOT",
-                        imagine: "/static/imagini/staff/ZăpodianuNicolas_PI.jpg"
+                        imagine: "/static/imagini/staff/ZăpodianuNicolas_PI.png"
                     },
                     {
                         id: 6,
@@ -215,7 +215,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "22",
                         Inaltime: "1.83 m",
                         rol: "CENTRU",
-                        imagine: "/static/imagini/staff/OstafeRareș_C.jpg"
+                        imagine: "/static/imagini/staff/OstafeRareș_C.png"
                     },
                     {
                         id: 7,
@@ -224,7 +224,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "98",
                         Inaltime: "1.83 m",
                         rol: "CENTRU",
-                        imagine: "/static/imagini/staff/NiculaieBogdan_C.jpg"
+                        imagine: "/static/imagini/staff/NiculaieBogdan_C.png"
                     },
                     {
                         id: 8,
@@ -233,7 +233,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "78",
                         Inaltime: "1.83 m",
                         rol: "PIVOT",
-                        imagine: "/static/imagini/staff/FocșăneanuAlexandru_PI.jpg"
+                        imagine: "/static/imagini/staff/FocșăneanuAlexandru_PI.png"
                     },
                     {
                         id: 9,
@@ -242,7 +242,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "42",
                         Inaltime: "1.83 m",
                         rol: "EXTREMĂ STÂNGA",
-                        imagine: "/static/imagini/staff/ȚivichiAlexandru_ES.jpg"
+                        imagine: "/static/imagini/staff/ȚivichiAlexandru_ES.png"
                     },
                     {
                         id: 10,
@@ -251,7 +251,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "21",
                         Inaltime: "1.83 m",
                         rol: "INTER DREAPTA",
-                        imagine: "/static/imagini/staff/RaduCodrin_ID.jpg"
+                        imagine: "/static/imagini/staff/RaduCodrin_ID.png"
                     },
                     {
                         id: 11,
@@ -260,7 +260,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "18",
                         Inaltime: "1.83 m",
                         rol: "EXTREMĂ STÂNGĂ",
-                        imagine: "/static/imagini/staff/IlucăTeodor_ES.jpg"
+                        imagine: "/static/imagini/staff/IlucăTeodor_ES.png"
                     },
                     {
                         id: 12,
@@ -269,7 +269,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "14",
                         Inaltime: "1.83 m",
                         rol: "EXTREMĂ DREAPTĂ",
-                        imagine: "/static/imagini/staff/PășcuțIonuț_ED.jpg"
+                        imagine: "/static/imagini/staff/PășcuțIonuț_ED.png"
                     },
                     {
                         id: 13,
@@ -278,7 +278,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "36",
                         Inaltime: "1.83 m",
                         rol: "INTER DREAPTA",
-                        imagine: "/static/imagini/staff/MoșneaguTeodor_ID.jpg"
+                        imagine: "/static/imagini/staff/MoșneaguTeodor_ID.png"
                     },
                     {
                         id: 14,
@@ -287,7 +287,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "16",
                         Inaltime: "1.83 m",
                         rol: "PORTAR",
-                        imagine: "/static/imagini/staff/RîpăRăzvan_PO.jpg"
+                        imagine: "/static/imagini/staff/RîpăRăzvan_PO.png"
                     },
                     {
                         id: 15,
@@ -296,7 +296,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "9",
                         Inaltime: "1.83 m",
                         rol: "EXTREMĂ DREAPTĂ",
-                        imagine: "/static/imagini/staff/GrigoreSorin_ED.jpg"
+                        imagine: "/static/imagini/staff/GrigoreSorin_ED.png"
                     },
                     {
                         id: 16,
@@ -305,7 +305,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "12",
                         Inaltime: "1.83 m",
                         rol: "PORTAR",
-                        imagine: "/static/imagini/staff/PodoveiDragoș_PO.jpg"
+                        imagine: "/static/imagini/staff/PodoveiDragoș_PO.png"
                     },
                     {
                         id: 17,
@@ -314,7 +314,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "11",
                         Inaltime: "1.83 m",
                         rol: "CENTRU",
-                        imagine: "/static/imagini/staff/RațăAndrei_C.jpg"
+                        imagine: "/static/imagini/staff/RațăAndrei_C.png"
                     },
                     {
                         id: 18,
@@ -323,7 +323,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "5",
                         Inaltime: "1.83 m",
                         rol: "PIVOT",
-                        imagine: "/static/imagini/staff/ȘerbanEmanuel_PI.jpg"
+                        imagine: "/static/imagini/staff/ȘerbanEmanuel_PI.png"
                     },
                     {
                         id: 19,
@@ -332,7 +332,7 @@ class InformatiiEchipa extends HTMLElement {
                         Numar: "4",
                         Inaltime: "1.83 m",
                         rol: "EXTREMĂ STÂNGĂ",
-                        imagine: "/static/imagini/staff/RoșuIulian_ES.jpg"
+                        imagine: "/static/imagini/staff/RoșuIulian_ES.png"
                     },
                     {
                         id: 20,
@@ -340,7 +340,7 @@ class InformatiiEchipa extends HTMLElement {
                         Prenume: "Mihai",
                         Inaltime: "1.83 m",
                         rol: "KINETOTERAPEUT",
-                        imagine: "/static/imagini/staff/VornicuMihai_K.jpg"
+                        imagine: "/static/imagini/staff/VornicuMihai_K.png"
                     },
                     {
                         id: 21,
@@ -348,7 +348,7 @@ class InformatiiEchipa extends HTMLElement {
                         Prenume: "Ioan",
                         Inaltime: "1.83 m",
                         rol: "ANTRENOR",
-                        imagine: "/static/imagini/staff/TcaciucIoan_A.jpg"
+                        imagine: "/static/imagini/staff/TcaciucIoan_A.png"
                     },
                     {
                         id: 22,
@@ -356,7 +356,7 @@ class InformatiiEchipa extends HTMLElement {
                         Prenume: "Vasile",
                         Inaltime: "1.83 m",
                         rol: "ANTRENOR",
-                        imagine: "/static/imagini/staff/BocaVasile_A.jpg"
+                        imagine: "/static/imagini/staff/BocaVasile_A.png"
                     }
                 ];
             case "Supercupa Romaniei '23-'24":
