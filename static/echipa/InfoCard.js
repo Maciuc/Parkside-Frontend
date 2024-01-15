@@ -36,7 +36,7 @@ class InfoCard extends HTMLElement {
 
                 .flip-image {
                     position: relative;
-                    transition: transform ease-in-out 0.8s;
+                    transition: transform linear 0.75s;
                     transform-style: preserve-3d;
                     width: 100%;
                     height: 100%;

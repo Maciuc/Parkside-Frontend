@@ -149,7 +149,7 @@ class PanouUrmatorulMeci extends HTMLElement {
                 siglaAdversar: "/static/imagini/echipe/CS Universitatea Cluj.png",
                 numeCampionat: "Liga Zimbrilor Masculin",
                 locatie: "",
-                data: "30.12.2023,10:00",
+                data: "15.01.2024,17:39",
                 scor: "0:0",
                 meciAcasa: 1
             }
@@ -183,7 +183,11 @@ class PanouUrmatorulMeci extends HTMLElement {
     meciulSeJoaca(dataMeci) {
         let temp = dataMeci.split(",");
 
-        const data_meci = temp[0];
+        let data_meci = "";
+
+        temp[0].split(".").forEach((element)=>{data_meci += "." + parseInt(element, 10);}); 
+        data_meci = data_meci.substring(1);
+        
         const ora_meci = temp[1];
 
         let timpulCurent = new Date();

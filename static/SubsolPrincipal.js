@@ -29,8 +29,20 @@ class SubsolPrincipal extends HTMLElement {
                 }
 
                 .button-inapoi-sus {
+                    padding: 0.5rem 1rem;
+                    border-radius: 0.75rem;
+                    border: 0.25rem solid black;
                     margin-right: 3rem;
                     float: right;
+                    background-color: #3E4095;
+                    color: white;
+                    transition: transform ease-out 0.25s;
+                    margin: 2rem 3rem;
+                    font-size: 1.5rem;
+                }
+
+                .button-inapoi-sus:hover {
+                    transform: scale(1.1,1.1);
                 }
 
                 .big-separator {
@@ -47,13 +59,14 @@ class SubsolPrincipal extends HTMLElement {
                     justify-content: center;
                     align-items: center;
                     gap: 5rem;
+                    padding: 0 10rem;
                     padding-bottom: 2rem;
                     margin-top: 1rem;
                 }
 
                 .container-sponsori img {
                     object-fit: cover; 
-                    height: 7rem;
+                    height: 4rem;
                     transition: transform ease-out 0.5s;
                 }
 
@@ -85,6 +98,7 @@ class SubsolPrincipal extends HTMLElement {
 
                 .date-contact {
                     flex-direction: column;
+                    margin-bottom: 2rem;
                 }
 
                 .social-media {
@@ -129,9 +143,9 @@ class SubsolPrincipal extends HTMLElement {
                     </div>
                 </div>
 
-                <button class="button-inapoi-sus">
+                <div class="button-inapoi-sus">
                     ÎNAPOI SUS
-                </button>
+                </div>
             </div>
         `;
     }
