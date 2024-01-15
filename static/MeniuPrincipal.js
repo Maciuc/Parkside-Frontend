@@ -77,9 +77,9 @@ class MeniuPrincipal extends HTMLElement {
                         <a href="/static/echipa/echipa.html">Echipa</a>
                         <a href="/static/meciuri/meciuri.html">Meciuri</a>
                         <a href="/static/clasament/clasament.html">Clasament</a>
-                        <a href="../../static/PaginaStiri/Stiri.html">Stiri</a>
+                        <a href="/static/PaginaStiri/Stiri.html">Stiri</a>
                         <a href="">Istorie</a>
-                        <a href="../../templates/start.html">Login</a>
+                        <a href="/templates/start.html">Login</a>
                     </div>
                 </div>
                 <slot>
