@@ -47,7 +47,7 @@ class SubsolPrincipal extends HTMLElement {
 
                 .big-separator {
                     margin: 1rem 15rem;
-                    height: 1rem;
+                    height: 0.5rem;
                     background-color: #3E4095;
                     border-radius: 5rem;
                 }
@@ -58,7 +58,7 @@ class SubsolPrincipal extends HTMLElement {
                     flex-wrap: wrap;
                     justify-content: center;
                     align-items: center;
-                    gap: 5rem;
+                    gap: 2.5rem 5rem;
                     padding: 0 10rem;
                     padding-bottom: 2rem;
                     margin-top: 1rem;
@@ -66,7 +66,7 @@ class SubsolPrincipal extends HTMLElement {
 
                 .container-sponsori img {
                     object-fit: cover; 
-                    height: 4rem;
+                    height: 2rem;
                     transition: transform ease-out 0.5s;
                 }
 
@@ -81,12 +81,12 @@ class SubsolPrincipal extends HTMLElement {
 
                 .social-media img {
                     object-fit: cover;
-                    height: 5rem;
+                    height: 2rem;
                     transition: transform ease-out 0.5s;
                 }
 
                 .social-media img:hover {
-                    transform: scale(1.15,1.15);
+                    transform: scale(1.5,1.5);
                 }
 
                 .date-contact, .social-media {
@@ -102,7 +102,7 @@ class SubsolPrincipal extends HTMLElement {
                 }
 
                 .social-media {
-                    gap: 3rem;
+                    gap: 2rem;
                 }
 
                 .date-contact p {

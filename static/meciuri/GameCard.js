@@ -74,6 +74,7 @@ class GameCard extends HTMLElement {
                     display: flex;
                     align-items: center;
                     justify-content: flex-start;
+                    margin: 0.5rem 0;
                 }
 
                 .echipa img {
