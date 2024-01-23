@@ -3,6 +3,7 @@
 export const font_family_default = `"Lucida Console", "Monaco", monospace`;
 export const border_default = `0.1rem solid black`;
 export const border_radius_default = `0.5rem`;
+export const backendServerAddress = "https://localhost:7260/";
 
 let favicon = document.createElement("link");
 favicon.setAttribute("rel","icon");

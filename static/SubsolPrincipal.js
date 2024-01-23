@@ -1,4 +1,4 @@
-import { font_family_default, border_radius_default } from "./index.js";
+import { font_family_default, backendServerAddress } from "./index.js";
 
 class SubsolPrincipal extends HTMLElement {
     render()
@@ -162,35 +162,43 @@ class SubsolPrincipal extends HTMLElement {
     }
 
     returneazaSponsorii() {
-        return [
-            ["/static/imagini/sponsori/suceava.png","http://cjsuceava.ro/ro/"],
-            ["/static/imagini/sponsori/usv.png","https://usv.ro/"],
-            ["/static/imagini/sponsori/celestin.png","https://www.tipografiacelestin.ro/"],
-            ["/static/imagini/sponsori/pepenero.jpg","https://pepeneropizza.ro/"],
-            ["/static/imagini/sponsori/vivendi.png","https://restaurantvivendi.ro/"],
-            ["/static/imagini/sponsori/mihu.jpg","https://mihushop.ro/"],
-            ["/static/imagini/sponsori/iuliusmall.png","https://suceava.iuliusmall.com/"],
-            ["/static/imagini/sponsori/fiterman-pharma.png","https://www.fitermanpharma.ro/"],
-            ["/static/imagini/sponsori/urban.jpg","https://www.urbanstreetfood.ro/"],
-            ["/static/imagini/sponsori/expert-music.jpg","https://expertmusic.ro/ro/"]
-        ];
+        return new Promise((resolve, reject) => {
+            fetch(backendServerAddress + "api/Sponsor/getHomePageSponsors")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
     }
 
     actualizeazaSponsorii() {
-        const informatiiSponsori = this.returneazaSponsorii();
+        this.returneazaSponsorii()
+        .then(informatiiSponsori => {
 
-        const containerSponsori = this.shadowRoot.querySelector(".container-sponsori");
+            const containerSponsori = this.shadowRoot.querySelector(".container-sponsori");
 
-        for(let i=0;i<informatiiSponsori.length;i++) {
-            let informatiiSponsor = informatiiSponsori[i];
+            for(let i=0;i<informatiiSponsori.length;i++) {
+                let informatiiSponsor = informatiiSponsori[i];
 
-            const a = document.createElement("a");
-            a.setAttribute("target","_blank");
-            a.setAttribute("href",informatiiSponsor[1]);
-            a.innerHTML = `<img src="${informatiiSponsor[0]}">`;
+                const a = document.createElement("a");
+                a.setAttribute("target","_blank");
+                a.setAttribute("href",informatiiSponsor["Link"]);
+                a.innerHTML = `<img src="${informatiiSponsor["ImageBase64"]}">`;
 
-            containerSponsori.appendChild(a);
-        }
+                containerSponsori.appendChild(a);
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });  
     }
 
     returneazaDateleDeContact() {
@@ -214,27 +222,68 @@ class SubsolPrincipal extends HTMLElement {
     }
 
     returneazaDateleDeSocialMedia() {
-        return [
-            ["/static/imagini/social-media/facebook.png","https://www.facebook.com/CSUSuceava/?locale=ro_RO"],
-            ["/static/imagini/social-media/instagram.png","https://www.instagram.com/csusuceava/?hl=ro"]
+        return new Promise((resolve, reject) => {
+            fetch(backendServerAddress + "api/SocialMedia/getHomePageSocialMedia")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    returneazaCaleaImaginiiDeSocialMedia(SocialMediaName) {
+        const SocialMediaImages = [
+            {
+                Name: "Facebook",
+                Path: "/static/imagini/social-media/facebook.png"
+            },
+            {
+                Name: "Instagram",
+                Path: "/static/imagini/social-media/instagram.png",
+            }
         ];
+
+        let SocialMediaImagePath = "";
+    
+        const keys = Object.keys(SocialMediaImages);
+
+        for(let i=0;i<SocialMediaImages.length;i++) {
+            if(SocialMediaImages[i]["Name"] === SocialMediaName) {
+                SocialMediaImagePath = SocialMediaImages[i]["Path"];
+                break;
+            }
+        }
+
+        return SocialMediaImagePath;
     }
 
     actualizeazaDateleDeSocialMedia() {
-        const dateSocialMedia = this.returneazaDateleDeSocialMedia();
+        this.returneazaDateleDeSocialMedia()
+        .then(dateSocialMedia => {
+            const containerSocialMedia = this.shadowRoot.querySelector(".social-media");
 
-        const containerSocialMedia = this.shadowRoot.querySelector(".social-media");
-
-        for(let i=0;i<dateSocialMedia.length;i++) {
-            let socialMedia = dateSocialMedia[i];
-            const a = document.createElement("a");
-            a.setAttribute("target","_blank");
-            a.setAttribute("href",socialMedia[1]);
-
-            a.innerHTML = `<img src="${socialMedia[0]}">`;
-
-            containerSocialMedia.appendChild(a);
-        }
+            for(let i=0;i<dateSocialMedia.length;i++) {
+                let socialMedia = dateSocialMedia[i];
+                const a = document.createElement("a");
+                a.setAttribute("target","_blank");
+                a.setAttribute("href",socialMedia["Link"]);
+    
+                a.innerHTML = `<img src="${this.returneazaCaleaImaginiiDeSocialMedia(socialMedia["Name"])}">`;
+    
+                containerSocialMedia.appendChild(a);
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });  
     }
 
     connectedCallback() {

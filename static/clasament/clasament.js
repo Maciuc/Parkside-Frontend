@@ -1,5 +1,6 @@
 import MeniuPrincipal from "../MeniuPrincipal.js";
 import SubsolPrincipal from "../SubsolPrincipal.js";
+import {backendServerAddress } from "../index.js";
 
 let shadow;
 
@@ -83,7 +84,7 @@ class ComponentaClasament extends HTMLElement {
      * @returns un array de arrays, unde fiecare array contine informatiile aferente unei echipe din clasament
      */
     returneazaContinutulCorpuluiDeTabel() {
-        return [ 
+        /*return [ 
             ["CS Dinamo București",14,14,0,0,524,390,134,7,0,7,0,21,21,42],
             ["CS Minaur Baia Mare",14,10,2,2,443,395,48,5,1,5,1,16,16,32],
             ["CSM Constanta",13,10,1,2,382,333,49,5,1,5,0,16,15,31],
@@ -98,53 +99,73 @@ class ComponentaClasament extends HTMLElement {
             ["CSM Sighisoara",13,3,0,10,328,368,-40,1,0,2,0,3,6,9],
             ["CS Universitatea Cluj",13,2,1,10,380,429,-49,2,0,0,1,6,1,7],
             ["CSM Vaslui",13,1,1,11,358,400,-42,0,0,1,1,0,4,4]
-        ];
+        ];*/
+
+        return new Promise((resolve, reject) => {
+            fetch(backendServerAddress + "api/Ranking/getRankings")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
     }
 
     /**
      * @description preia numele campurilor, precum si inregistrarile tabelului clasament si populeaza tabelul clasament
      */
     populeazaTabelulClasament() {
-        let referintaTabel = shadow.querySelector(".tabel-clasament");
+        this.returneazaContinutulCorpuluiDeTabel()
+        .then(liniiTabel => {
+            let referintaTabel = shadow.querySelector(".tabel-clasament");
 
-        let capDeTabel = this.returneazaContinutulCapuluiDeTabel();
+            let capDeTabel = this.returneazaContinutulCapuluiDeTabel();
 
-        let liniiTabel = this.returneazaContinutulCorpuluiDeTabel();
+            let tableRow = document.createElement('tr');
 
-        let tableRow = document.createElement('tr');
+            for(let i=0;i<capDeTabel.length;i++) {
+                let tableHeader = document.createElement('td');
+                tableHeader.innerText = capDeTabel[i][0];
+                tableHeader.setAttribute('title',capDeTabel[i][1]);
 
-        for(let i=0;i<capDeTabel.length;i++) {
-            let tableHeader = document.createElement('td');
-            tableHeader.innerText = capDeTabel[i][0];
-            tableHeader.setAttribute('title',capDeTabel[i][1]);
-
-            tableRow.appendChild(tableHeader);
-        }
-
-        let thead = document.createElement('thead');
-        thead.appendChild(tableRow);
-        referintaTabel.appendChild(thead);
-
-        let tbody = document.createElement('tbody');
-
-        for(let i=0;i<liniiTabel.length;i++) {
-            tableRow = document.createElement('tr');
-
-            let tableRowData = liniiTabel[i];
-
-            tableRow.innerHTML = `<td>${i+1}</td>`;
-
-            for(let j=0;j<tableRowData.length;j++) {
-                let tableData = document.createElement('td');
-                tableData.innerText = tableRowData[j];
-
-                tableRow.appendChild(tableData);
+                tableRow.appendChild(tableHeader);
             }
 
-            tbody.appendChild(tableRow);
-        }
+            let thead = document.createElement('thead');
+            thead.appendChild(tableRow);
+            referintaTabel.appendChild(thead);
 
-        referintaTabel.appendChild(tbody);
+            let tbody = document.createElement('tbody');
+
+            const keys = Object.keys(liniiTabel[0]);
+
+            for(let i=0;i<liniiTabel.length;i++) {
+                tableRow = document.createElement('tr');
+
+                let tableRowData = liniiTabel[i];
+
+                for(let j=0;j<keys.length;j++) {
+                    let tableData = document.createElement('td');
+                    tableData.innerText = tableRowData[keys[j]];
+
+                    tableRow.appendChild(tableData);
+                }
+
+                tbody.appendChild(tableRow);
+            }
+
+            referintaTabel.appendChild(tbody);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
     }
 
     connectedCallback() {

@@ -749,20 +749,3 @@ class InformatiiEchipa extends HTMLElement {
 }
 
 customElements.define('informatii-echipa', InformatiiEchipa);
-
-const url = 'https://localhost:7260/api/getPlayers?pageNumber=1&pageSize=10';
-
-fetch(url)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    // Work with the retrieved data here
-    console.log(data.Items);
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });

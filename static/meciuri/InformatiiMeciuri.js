@@ -180,8 +180,8 @@ class InformatiiMeciuri extends HTMLElement {
      * 
      * @param dataDeReferinta data ce va fi limita superioara/inferioara pentru meciurile ce vor fi obtinute
      * @param numarMaximMeciuri numarul maxim de meciuri ce vor fi returnate
-     * @param meciuriUlterioare daca != 0, atunci meciurile returnate se vor disputa pe o data mai mare decat dataDeReferinta; 
-     *                          daca = 0, atunci meciurile returnate se vor disputa pe o data anterioara datei dataDeReferinta
+     * @param meciuriUlterioare daca true, atunci meciurile returnate se vor disputa pe o data mai mare decat dataDeReferinta; 
+     *                          false, atunci meciurile returnate se vor disputa pe o data anterioara datei dataDeReferinta
      * @description returneaza informatiile despre 'numarMeciuri' meciuri
      */
     returneazaInformatiileDespreMeciuri(dataDeReferinta,numarMaximMeciuri,meciuriUlterioare) {
