@@ -249,6 +249,19 @@ class SubsolPrincipal extends HTMLElement {
                 Name: "Instagram",
                 Path: "/static/imagini/social-media/instagram.png",
             }
+            ,
+            {
+                Name: "WhatsApp",
+                Path: "/static/imagini/social-media/whatsapp.png",
+            },
+            {
+                Name: "TikTok",
+                Path: "/static/imagini/social-media/tiktok.png",
+            },
+            {
+                Name: "X",
+                Path: "/static/imagini/social-media/x.png",
+            }
         ];
 
         let SocialMediaImagePath = "";
@@ -276,7 +289,7 @@ class SubsolPrincipal extends HTMLElement {
                 a.setAttribute("target","_blank");
                 a.setAttribute("href",socialMedia["Link"]);
     
-                a.innerHTML = `<img src="${this.returneazaCaleaImaginiiDeSocialMedia(socialMedia["Name"])}">`;
+                a.innerHTML = `<img src="${this.returneazaCaleaImaginiiDeSocialMedia(socialMedia["Platform"])}">`;
     
                 containerSocialMedia.appendChild(a);
             }
