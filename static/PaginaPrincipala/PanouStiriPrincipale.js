@@ -1,11 +1,10 @@
-import {font_family_default,border_default,border_radius_default} from "../index.js";
+import {font_family_default, backendServerAddress} from "../index.js";
 
-function stire(caleImagine,rezumatStire) {
-    this.caleImagine = caleImagine;
+function stire(imagineStire,rezumatStire) {
+    this.imagineStire = imagineStire;
     this.rezumatStire = rezumatStire;
 }
 
-const numarStiriDeAfisat = 3;
 var stiriDeAfisat = [];
 var indexStireCurenta = 0;
 
@@ -100,19 +99,13 @@ class PanouStiriPrincipale extends HTMLElement {
                 </div>
                 <div class="container" style="opacity: 1; z-index:0;">
                     <div class="img-container">
-                        <img src="${stiriDeAfisat[indexStireCurenta].caleImagine}">
+                        <img src="${stiriDeAfisat[indexStireCurenta].imagineStire}">
                     </div>
                     <div class="rezumat-stire">
                         ${stiriDeAfisat[indexStireCurenta].rezumatStire}
                     </div>
                 </div>
                 <div class="schimba-stirea-curenta">
-                    <div class="dot" style="background-color: white;" index="0">
-                    </div>
-                    <div class="dot" index="1">
-                    </div>
-                    <div class="dot" index="2">
-                    </div>
                 </div>
             </div>
         `;
@@ -125,14 +118,35 @@ class PanouStiriPrincipale extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
 
-        this.preiaContinutulUtlimelorNStiri();
-        this.render();
-    }
+        this.incarcaStirilePrincipale()
+        .then(() => {       
+            if(stiriDeAfisat.length !== 0) {
+                this.render();
 
-    preiaContinutulUtlimelorNStiri() {
-        stiriDeAfisat.push(new stire("./static/imagini/stire1_1.jpg","România a încheiat pe locul secund Trofeul Carpați pentru juniori"));
-        stiriDeAfisat.push(new stire("./static/imagini/stire2_1.jpg","România va juca astăzi cu Egipt, de la ora 12:30, pentru câștigarea Trofeului Carpați"));
-        stiriDeAfisat.push(new stire("./static/imagini/stire3_1.jpg","Handbaliștii de la CSU Suceava au fost protagoniștii primului meci pe care echipa națională a României l-a disputat la Trofeul Carpați pentru juniori"));  
+                const butoaneSchimbaStireaCurenta = this.shadowRoot.querySelector(".schimba-stirea-curenta");
+
+                for(let i=0;i<stiriDeAfisat.length;i++) {
+                    const dot = document.createElement("div");
+                    dot.setAttribute("class","dot");
+                    dot.setAttribute("index",i);
+
+                    butoaneSchimbaStireaCurenta.appendChild(dot);
+                }
+
+                butoaneSchimbaStireaCurenta.firstElementChild.style.backgroundColor = "white";
+            
+                this.containere = this.shadowRoot.querySelectorAll(".container");
+
+                this.dots = this.shadowRoot.querySelectorAll(".dot");
+
+                for(let i=0;i<this.dots.length;i++) {
+                    this.dots[i].addEventListener('mousedown',(eventInfo) => {this.afiseazaStireaDorita(eventInfo);});
+                    this.dots[i].addEventListener('mouseup',() => {this.timerHandler = setInterval(this.afiseazaUrmatoareaStire.bind(this), 5000);});
+                }
+
+                this.timerHandler = setInterval(this.afiseazaUrmatoareaStire.bind(this), 5000);
+            }  
+        });
     }
 
     afiseazaStireaCurenta() {
@@ -141,7 +155,7 @@ class PanouStiriPrincipale extends HTMLElement {
         const containerCurent = this.containere[this.indexContainerCurent];
 
         containerCurent.style.opacity = 0;
-        containerCurent.querySelector("img").src = stiriDeAfisat[indexStireCurenta].caleImagine;
+        containerCurent.querySelector("img").src = stiriDeAfisat[indexStireCurenta].imagineStire;
         containerCurent.querySelector(".rezumat-stire").innerText = stiriDeAfisat[indexStireCurenta].rezumatStire;
         containerCurent.style.zIndex = 0;
 
@@ -154,7 +168,7 @@ class PanouStiriPrincipale extends HTMLElement {
 
     afiseazaUrmatoareaStire() {
         this.dots[indexStireCurenta].style.backgroundColor = "";
-        indexStireCurenta = (indexStireCurenta + 1) % numarStiriDeAfisat;
+        indexStireCurenta = (indexStireCurenta + 1) % stiriDeAfisat.length;
 
         this.afiseazaStireaCurenta();
     }
@@ -171,17 +185,37 @@ class PanouStiriPrincipale extends HTMLElement {
         this.afiseazaStireaCurenta();
     }
 
-    connectedCallback() {
-        this.containere = this.shadowRoot.querySelectorAll(".container");
+    returneazaStirilePrincipale() {
+        return new Promise((resolve, reject) => {
+            fetch(backendServerAddress + "api/News/getLatestPrimaryNewses")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
 
-        this.dots = this.shadowRoot.querySelectorAll(".dot");
-
-        for(let i=0;i<this.dots.length;i++) {
-            this.dots[i].addEventListener('mousedown',(eventInfo) => {this.afiseazaStireaDorita(eventInfo);});
-            this.dots[i].addEventListener('mouseup',() => {this.timerHandler = setInterval(this.afiseazaUrmatoareaStire.bind(this), 5000);});
-        }
-
-        this.timerHandler = setInterval(this.afiseazaUrmatoareaStire.bind(this), 5000);
+    incarcaStirilePrincipale() {
+        return new Promise(async (resolve) => {
+            this.returneazaStirilePrincipale()
+            .then(stiri => {
+                for(let i=0;i<stiri.length;i++) {
+                    stiriDeAfisat.push(new stire(stiri[i]["ImageBase64"],stiri[i]["Name"])); 
+                }
+                resolve();
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
     }
   }
   

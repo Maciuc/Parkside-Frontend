@@ -1,4 +1,4 @@
-import {font_family_default,border_radius_default,border_default} from "../index.js";
+import {font_family_default,border_radius_default,backendServerAddress} from "../index.js";
 
 let shadow;
 
@@ -136,54 +136,6 @@ class PanouUltimeleStiri extends HTMLElement {
                         <img src="/static/imagini/left-arrow.png">
                     </button>
                     <div class="container-stiri">
-                        <div class="stire">
-                            <div class="img-container">
-                                <img src="/static/imagini/stire1_1.jpg">
-                            </div>
-                            <div class="rezumat">
-                                Rezumat stire 1
-                            </div>
-                        </div>
-                        <div class="stire">
-                            <div class="img-container">
-                                <img src="/static/imagini/stire2_1.jpg">
-                            </div>
-                            <div class="rezumat">
-                                Rezumat stire 2
-                            </div>
-                        </div>
-                        <div class="stire">
-                            <div class="img-container">
-                                <img src="/static/imagini/stire3_1.jpg">
-                            </div>
-                            <div class="rezumat">
-                                Rezumat stire 3
-                            </div>
-                        </div>
-                        <div class="stire">
-                            <div class="img-container">
-                                <img src="/static/imagini/stire1_1.jpg">
-                            </div>
-                            <div class="rezumat">
-                                Rezumat stire 4
-                            </div>
-                        </div>
-                        <div class="stire">
-                            <div class="img-container">
-                                <img src="/static/imagini/stire2_1.jpg">
-                            </div>
-                            <div class="rezumat">
-                                Rezumat stire 5
-                            </div>
-                        </div>
-                        <div class="stire">
-                            <div class="img-container">
-                                <img src="/static/imagini/stire3_1.jpg">
-                            </div>
-                            <div class="rezumat">
-                                Rezumat stire 6
-                            </div>
-                        </div>
                     </div>
                     <button type="button"class="button-arrow-right">
                         <img src="/static/imagini/right-arrow.png">
@@ -193,17 +145,69 @@ class PanouUltimeleStiri extends HTMLElement {
         `;
     }
 
+    incarcaStirile() {
+        return new Promise((resolve, reject) => {
+            fetch(backendServerAddress + "api/News/getLatestNormalNewses")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
     constructor() {
         super();
         shadow = this.attachShadow({ mode: "open" });
 
-        this.render();
+        this.incarcaStirile()
+        .then(data => {
+            this.render();
+
+            const containerStiri = this.shadowRoot.querySelector(".container-stiri");
+
+            for(let i=0;i<data.length;i++) {
+                let stire = document.createElement("div");
+                stire.setAttribute("class","stire");
+
+                stire.innerHTML = `
+                    <div class="img-container">
+                        <img src="${data[i]["ImageBase64"]}">
+                    </div>
+                    <div class="rezumat">
+                        ${data[i]["Name"]}
+                    </div>
+                `;
+
+                containerStiri.appendChild(stire);
+            }
+
+            stiri = shadow.querySelectorAll(".container-stiri .stire");
+
+            this.addEventListeners();
+
+            this.actualizeazaNumarulStirilorAfisate();
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });  
+
+        
     }
 
     actualizeazaNumarulStirilorAfisate() {
         const latimePagina = window.innerWidth;
 
         let numarActualizatStiriAfisate;
+
+        const numarStiri = stiri.length;
 
         if(latimePagina <= 1500) {
             if(latimePagina <=650) {
@@ -217,20 +221,23 @@ class PanouUltimeleStiri extends HTMLElement {
             numarActualizatStiriAfisate = 3;
         }
 
-        const numarStiri = stiri.length;
-
-        if(numarActualizatStiriAfisate > numarStiriAfisate) {
-            if(indexulStiriiDinParteaStanga > numarStiri - numarActualizatStiriAfisate) {
-                this.shadowRoot.querySelector(".button-arrow-right").style.visibility = "visible";
-            }
-        }
-        else 
-            if(numarActualizatStiriAfisate < numarStiriAfisate) {
-                if(indexulStiriiDinParteaStanga < numarStiri - numarActualizatStiriAfisate) {
+        if(numarStiri > numarActualizatStiriAfisate)  {
+            if(numarActualizatStiriAfisate > numarStiriAfisate) {
+                if(indexulStiriiDinParteaStanga > numarStiri - numarActualizatStiriAfisate) {
                     this.shadowRoot.querySelector(".button-arrow-right").style.visibility = "visible";
                 }
             }
-
+            else 
+                if(numarActualizatStiriAfisate < numarStiriAfisate) {
+                    if(indexulStiriiDinParteaStanga < numarStiri - numarActualizatStiriAfisate) {
+                        this.shadowRoot.querySelector(".button-arrow-right").style.visibility = "visible";
+                    }
+                }
+        }
+        else {
+            this.shadowRoot.querySelector(".button-arrow-right").style.visibility = "hidden";
+        }
+        
         numarStiriAfisate = numarActualizatStiriAfisate;
     }
 
@@ -317,11 +324,6 @@ class PanouUltimeleStiri extends HTMLElement {
     }
 
     connectedCallback() {
-        stiri = shadow.querySelectorAll(".container-stiri .stire");
-
-        this.addEventListeners();
-
-        this.actualizeazaNumarulStirilorAfisate();
     }
 }
   
