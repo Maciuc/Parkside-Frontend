@@ -24,6 +24,7 @@ class PanouUltimeleStiri extends HTMLElement {
                 .container-title {
                     display: flex;
                     justify-content: center;
+                    text-align: center;
                     background-color: #3E4095;
                     color: white;
                     margin: 1rem;

@@ -1,4 +1,4 @@
-import {font_family_default,border_default,border_radius_default} from "../index.js";
+import {font_family_default,border_radius_default,backendServerAddress,CustomDate} from "../index.js";
 
 class PanouUrmatorulMeci extends HTMLElement {
     render()
@@ -20,6 +20,7 @@ class PanouUrmatorulMeci extends HTMLElement {
                     display: flex;
                     width: fit-content;
                     justify-content: center;
+                    text-align: center;
                     color: white;
                     background-color: #3E4095;
                     margin: 1rem;
@@ -36,11 +37,12 @@ class PanouUrmatorulMeci extends HTMLElement {
 
                 .campionat-locatie {
                     display: flex;
-                    justify-content: space-around;
+                    justify-content: center;
+                    font-size: 2rem;
                 }
 
-                .campionat-locatie {
-                    font-size: 2rem;
+                .campionat-locatie p {
+                    margin: 1rem 2.5rem;
                 }
 
                 .echipe {
@@ -137,91 +139,142 @@ class PanouUrmatorulMeci extends HTMLElement {
             siglaEchipa: "/static/imagini/logo.png"
         };
     }
+
+    preiaToateMeciurile() {
+        return new Promise((resolve, reject) => {
+            fetch(backendServerAddress + "api/Match/getHomePageMatches")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    dataBase = [];
     
     urmMeciIndx=0;
     /**
-     * @description returneaza informatiile despre urmatorul meci, sau despre meciul curent (daca acesta se joaca)
+     * @description returneaza informatiile despre primul meciul cu data >= decat data de referinta
      */
-    returneazaUrmatorulMeci() {
-        if(this.urmMeciIndx < 1) {this.urmMeciIndx++;
-            return {
-                numeAdversar: "CS Universitatea Cluj",
-                siglaAdversar: "/static/imagini/echipe/CS Universitatea Cluj.png",
-                numeCampionat: "Liga Zimbrilor Masculin",
-                locatie: "",
-                data: "15.01.2024,17:39",
-                scor: "0:0",
-                meciAcasa: 1
-            }
-        }
-        else {
-            return {
-                numeAdversar: "SCM Politehnica Timișoara",
-                siglaAdversar: "/static/imagini/echipe/SCM Politehnica Timișoara.jpg",
-                numeCampionat: "Liga Zimbrilor Masculin",
-                locatie: "",
-                data: "18.02.2024,",
-                scor: "0:0",
-                meciAcasa: 0
-            }
-        }
-    }
-
-    meciulSeJoacaAcasa(meciAcasa) {
-        return meciAcasa === 1;
-    }
-
-    indx = 0;
-    scoruri = ["0:0","1:0","2:0","2:1","2:3","2:4","3:4","4:4","6:5","7:5"];
-    meciulSaTerminat() {
-        if(this.indx++ === 9) {
-            return true;
-        }
-        return false;
-    }
-
-    meciulSeJoaca(dataMeci) {
-        let temp = dataMeci.split(",");
-
-        let data_meci = "";
-
-        temp[0].split(".").forEach((element)=>{data_meci += "." + parseInt(element, 10);}); 
-        data_meci = data_meci.substring(1);
-        
-        const ora_meci = temp[1];
-
-        let timpulCurent = new Date();
-
-        let dataCurenta = timpulCurent.getDate() + "." + (timpulCurent.getMonth() + 1) + "." + timpulCurent.getFullYear();
-
-        if(dataCurenta === data_meci) {
-            if(ora_meci.length !== 0) {
-                const oraCurenta = timpulCurent.getHours() + ":" + timpulCurent.getMinutes();
-
-                if(oraCurenta >= ora_meci) {
-                    if(!this.meciulSaTerminat()) {
-                        return true;
+    returneazaUrmatorulMeci(dataDeReferinta) {
+        return new Promise(async (resolve) => {
+            for(let i=0; i<this.dataBase.length; i++) {
+                if(new CustomDate(this.dataBase[i]["MatchDate"]).compareTo(new CustomDate(dataDeReferinta)) > 0) {
+                    resolve(this.dataBase[i]);
+                }
+                else {
+                    if(new CustomDate(this.dataBase[i]["MatchDate"]).compareTo(new CustomDate(dataDeReferinta)) == 0) {
+                        if(!(await this.meciulSaTerminat(this.dataBase[i]["Id"]))) {
+                            resolve(this.dataBase[i]);
+                        } 
                     }
                 }
             }
-        }
+    
+            resolve({});
+        });
+    }
 
-        return false;
+    meciulSeJoacaAcasa(meciAcasa) {
+        return meciAcasa === true;
+    }
+
+    returneazaMeciul(idMeci) {
+        return new Promise((resolve, reject) => {
+            fetch(backendServerAddress + "api/Match/getMatch/" + idMeci)
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    meciulSaTerminat(idMeci) {
+        return new Promise((resolve) => {
+            this.returneazaMeciul(idMeci)
+            .then(informatiiMeci => {
+                resolve(informatiiMeci["IsFinished"]);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+    }
+
+    meciulSeJoaca(informatiiMeci) {
+        return new Promise(async (resolve) => {
+            let timpulCurent = new Date();
+
+            let dataCurenta = timpulCurent.getDate() + "." + (timpulCurent.getMonth() + 1) + "." + timpulCurent.getFullYear();
+
+            if(new CustomDate(informatiiMeci["MatchDate"]).compareTo(new CustomDate(dataCurenta)) == 0) {
+                if(informatiiMeci["MatchHour"].length !== 0) {
+                    const oraCurenta = timpulCurent.getHours() + ":" + timpulCurent.getMinutes();
+        
+                    if(oraCurenta >= informatiiMeci["MatchHour"]) {
+                        if(! (await this.meciulSaTerminat(informatiiMeci["Id"]))) {
+                            resolve(true);
+                        }
+                    }
+                }
+            }
+
+            resolve(false);
+        });
     }
 
     returneazaScorulCurent(idMeci) {
-        return this.scoruri[this.indx];
+        return new Promise((resolve, reject) => {
+            this.returneazaMeciul(idMeci)
+            .then(data => {
+                let score;
+
+                if(data["PlayingHome"]) {
+                    score = data["MainTeamPoints"] + ":" + data["EnemyTeamPoints"];
+                }
+                else {
+                    score = data["EnemyTeamPoints"] + ":" + data["MainTeamPoints"];
+                }
+
+                resolve(score);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
     }
 
     actualizeazaScorul(idMeci) {
         return new Promise((resolve) => {
-            const timer = setInterval(()=>{
-                if(this.meciulSaTerminat()) {
+            const timer = setInterval(async()=>{
+                if(await this.meciulSaTerminat(idMeci)) {
                     clearInterval(timer);
                     resolve();
                 }
                 else {
-                    this.shadowRoot.querySelector(".scor").innerHTML = this.returneazaScorulCurent(idMeci);
+                    this.returneazaScorulCurent(idMeci)
+                    .then(scor => {
+                        this.shadowRoot.querySelector(".scor").innerHTML = scor;
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
                 }
             },3000);
         });
@@ -241,93 +294,119 @@ class PanouUrmatorulMeci extends HTMLElement {
 
     async actualizeazaScorulMeciuluiInDesfasurare(idMeci) {
         const timerRefference = setInterval(()=>{this.evidentiazaButonulLive(this.shadowRoot.querySelector(".live"));},500);
-        this.shadowRoot.querySelector(".scor").innerHTML = this.returneazaScorulCurent(idMeci);
+
+        this.returneazaScorulCurent(idMeci)
+        .then(scor => {
+            this.shadowRoot.querySelector(".scor").innerHTML = scor;
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
         
         await this.actualizeazaScorul(idMeci);
 
         clearInterval(timerRefference);
         this.shadowRoot.querySelector(".panou").removeChild(this.shadowRoot.querySelector(".live"));
         this.actualizeazaMeciulUrmator();
-
     }
 
     actualizeazaMeciulUrmator() {
         let dateleEchipei = this.returneazaDateleEchipei(); 
 
-        let informatiiMeci = Object.assign(this.returneazaUrmatorulMeci(),dateleEchipei);
+        let timpulCurent = new Date();
 
-        let numeEchipa1;
-        let siglaEchipa1;
-        let numeEchipa2;
-        let siglaEchipa2;
+        let dataCurenta = timpulCurent.getDate() + "." + (timpulCurent.getMonth() + 1) + "." + timpulCurent.getFullYear();
 
-        if(this.meciulSeJoacaAcasa(informatiiMeci["meciAcasa"])) {
-            numeEchipa1 = informatiiMeci["numeEchipa"];
-            siglaEchipa1 = informatiiMeci["siglaEchipa"];
-            numeEchipa2 = informatiiMeci["numeAdversar"];
-            siglaEchipa2 = informatiiMeci["siglaAdversar"];
-        }
-        else {
-            numeEchipa1 = informatiiMeci["numeAdversar"];
-            siglaEchipa1 = informatiiMeci["siglaAdversar"];
-            numeEchipa2 = informatiiMeci["numeEchipa"];
-            siglaEchipa2 = informatiiMeci["siglaEchipa"];
-        }
-
-        let temp = `<p>${informatiiMeci["numeCampionat"]}</p>`;
-
-        if(informatiiMeci.locatie.length !== 0) {
-            temp += `<p>${informatiiMeci["locatie"]}</p>`;
-        }
-
-        this.shadowRoot.querySelector(".campionat-locatie").innerHTML = temp;
-
-        this.shadowRoot.querySelector(".echipa1").innerHTML = `
-            <img src="${siglaEchipa1}">
-            <div>${numeEchipa1}</div>
-        `;
-
-        this.shadowRoot.querySelector(".echipa2").innerHTML = `
-            <img src="${siglaEchipa2}">
-            <div>${numeEchipa2}</div>
-        `;
-
-        const div = this.shadowRoot.querySelector("#data-scor");
-
-        if(!this.meciulSeJoaca(informatiiMeci.data)) {
-            this.shadowRoot.querySelector(".header").innerHTML = 'Următorul meci';
-
-            div.setAttribute("class","data");
-
-            temp = informatiiMeci.data.split(",");
-
-            div.innerHTML = `
-                <p>${temp[0]}</p>
-            `;
+        this.returneazaUrmatorulMeci(dataCurenta)
+        .then(meciulUrmator => {
+            if(Object.keys(meciulUrmator).length != 0) {
+                let informatiiMeci = Object.assign(meciulUrmator,dateleEchipei);
     
-            if(temp[1].length > 1) {
-                div.innerHTML += `<p>${temp[1]}</p>`
+                let numeEchipa1;
+                let siglaEchipa1;
+                let numeEchipa2;
+                let siglaEchipa2;
+    
+                if(this.meciulSeJoacaAcasa(informatiiMeci["PlayingHome"])) {
+                    numeEchipa1 = informatiiMeci["numeEchipa"];
+                    siglaEchipa1 = informatiiMeci["siglaEchipa"];
+                    numeEchipa2 = informatiiMeci["EnemyTeamName"];
+                    siglaEchipa2 = informatiiMeci["EnemyTeamImageBase64"];
+                }
+                else {
+                    numeEchipa1 = informatiiMeci["EnemyTeamName"];
+                    siglaEchipa1 = informatiiMeci["EnemyTeamImageBase64"];
+                    numeEchipa2 = informatiiMeci["numeEchipa"];
+                    siglaEchipa2 = informatiiMeci["siglaEchipa"];
+                }
+    
+                let temp = `<p>${informatiiMeci["ChampionshipName"]}</p>`;
+    
+                if(informatiiMeci["Location"].length !== 0) {
+                    temp += `<p>${informatiiMeci["Location"]}</p>`;
+                }
+    
+                this.shadowRoot.querySelector(".campionat-locatie").innerHTML = temp;
+    
+                this.shadowRoot.querySelector(".echipa1").innerHTML = `
+                    <img src="${siglaEchipa1}">
+                    <div>${numeEchipa1}</div>
+                `;
+    
+                this.shadowRoot.querySelector(".echipa2").innerHTML = `
+                    <img src="${siglaEchipa2}">
+                    <div>${numeEchipa2}</div>
+                `;
+    
+                const div = this.shadowRoot.querySelector("#data-scor");
+    
+                this.meciulSeJoaca(informatiiMeci)
+                .then(meciulSeJoaca => {
+                    if(!meciulSeJoaca) {
+                        this.shadowRoot.querySelector(".header").innerHTML = 'Următorul meci';
+        
+                        div.setAttribute("class","data");
+        
+                        div.innerHTML = `
+                            <p>${informatiiMeci["MatchDate"]}</p>
+                        `;
+                
+                        div.innerHTML += `<p>${informatiiMeci["MatchHour"]}</p>`
+                    }
+                    else {
+                        this.shadowRoot.querySelector(".header").innerHTML = 'Meci în desfașurare';
+        
+                        div.setAttribute("class","scor");
+        
+                        const live = document.createElement("div");
+                        live.setAttribute("class","live");
+                        live.innerHTML = "LIVE";
+        
+                        this.shadowRoot.querySelector(".panou").appendChild(live);
+        
+                        this.actualizeazaScorulMeciuluiInDesfasurare(informatiiMeci["Id"]);
+                    }
+                }); 
             }
-        }
-        else {
-            this.shadowRoot.querySelector(".header").innerHTML = 'Meci în desfașurare';
+            else {
+                this.shadowRoot.querySelector(".header").innerHTML = "Următorul meci";
+                this.shadowRoot.querySelector(".body").innerHTML = "";
+            }
+        });
 
-            div.setAttribute("class","scor");
-
-            const live = document.createElement("div");
-            live.setAttribute("class","live");
-            live.innerHTML = "LIVE";
-
-            this.shadowRoot.querySelector(".panou").appendChild(live);
-
-            this.actualizeazaScorulMeciuluiInDesfasurare(0);
-        }
     }
 
     connectedCallback() {
-        this.actualizeazaMeciulUrmator();
+        this.preiaToateMeciurile()
+        .then(data => {
+            this.dataBase = data;
+                
+            this.actualizeazaMeciulUrmator();
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });  
     }
 }
   
 customElements.define('panou-urmatorul-meci', PanouUrmatorulMeci);
-

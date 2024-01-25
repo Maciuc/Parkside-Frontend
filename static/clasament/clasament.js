@@ -11,10 +11,11 @@ class ComponentaClasament extends HTMLElement {
             <style>
                 .clasament {
                     display: flex;
-                    flex-direction: column;
+                    flex-direction: row;
                     align-items: center;
-                    padding: 0 7.5%;
-                    margin-top: 2rem;
+                    justify-content: flex-start;
+                    margin: 2rem 7.5%;
+                    overflow-x: auto;
                 }
 
                 .tabel-clasament {
@@ -84,23 +85,6 @@ class ComponentaClasament extends HTMLElement {
      * @returns un array de arrays, unde fiecare array contine informatiile aferente unei echipe din clasament
      */
     returneazaContinutulCorpuluiDeTabel() {
-        /*return [ 
-            ["CS Dinamo București",14,14,0,0,524,390,134,7,0,7,0,21,21,42],
-            ["CS Minaur Baia Mare",14,10,2,2,443,395,48,5,1,5,1,16,16,32],
-            ["CSM Constanta",13,10,1,2,382,333,49,5,1,5,0,16,15,31],
-            ["CSM București",14,8,2,4,401,380,21,4,1,4,1,13,13,26],
-            ["AHC Potaissa Turda",13,7,2,4,448,411,37,4,1,3,1,13,10,23],
-            ["ACS HC Buzău 2012",14,7,2,5,436,426,10,6,0,1,2,18,5,23],
-            ["CSM Bacău",13,5,3,5,377,403,-26,2,2,3,1,8,10,18],
-            ["CSM Focșani 2007",13,5,2,6,364,394,-30,3,1,2,1,10,7,17],
-            ["CSU din Suceava",13,5,0,8,411,453,-42,3,0,2,0,9,6,15],
-            ["CSA Steaua București",13,3,2,8,373,400,-27,1,2,2,0,5,6,11],
-            ["SCM Politehnica Timișoara",13,3,2,8,337,380,-43,3,1,0,1,10,1,11],
-            ["CSM Sighisoara",13,3,0,10,328,368,-40,1,0,2,0,3,6,9],
-            ["CS Universitatea Cluj",13,2,1,10,380,429,-49,2,0,0,1,6,1,7],
-            ["CSM Vaslui",13,1,1,11,358,400,-42,0,0,1,1,0,4,4]
-        ];*/
-
         return new Promise((resolve, reject) => {
             fetch(backendServerAddress + "api/Ranking/getRankings")
             .then(response => {
@@ -174,28 +158,3 @@ class ComponentaClasament extends HTMLElement {
 }
   
 customElements.define('componenta-clasament', ComponentaClasament);
-
-/*const queryParams = {
-    nameSearch: 'value1',
-    param2: 'value2'
-  };
-
-fetch('https://localhost:7260/api/getPlayers?nameSearch=Ionescu&columnToSort=0&pageNumber=1&pageSize=10',{
-    method: 'GET',	
-    headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    },
-    mode: 'no-cors'
-})
-.then(function (response) {
-    if(response.ok) {
-        return response.json();
-    }else {
-        return Promise.reject(response);
-    }
-}).then(function (data) {
-    console.log(data);
-}).catch(function (err) {
-    console.log('Error: ',err)
-});*/
