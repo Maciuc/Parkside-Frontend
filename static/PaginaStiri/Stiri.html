@@ -229,8 +229,10 @@
             var weeks = Math.floor(days / 7);
             var months = Math.floor(days / 30.44); // 30.44 zile pe luna
             var years = Math.floor(days / 365);
-
-            if (seconds < 60) {
+            
+            if(timeDifference<0)
+                return `${inputDateTime.getDate()}/${inputDateTime.getMonth()+1}/${inputDateTime.getFullYear()}`;
+            else if (seconds < 60) {
                 return (seconds === 1) ? 'acum ' + seconds + ' secundă' : 'acum ' + seconds + ' secunde';
             } else if (minutes < 60) {
                 return (minutes === 1) ? 'acum ' + minutes + ' minut' : 'acum ' + minutes + ' minute';
