@@ -1,0 +1,280 @@
+<html>
+<head>
+    <script src="/static/MeniuPrincipal.js" type="module"></script>
+    <!-- <script src="/static/PaginaPrincipala/PanouStiriPrincipale.js" type="module"></script> -->
+    <script src="/static/SubsolPrincipal.js" type="module"></script>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+    <!-- <panou-stiri-principale></panou-stiri-principale> -->
+<style>
+
+    .news-whole-container
+    {
+        display: flex;
+        justify-content: center;
+    }
+
+    .news-content-container {
+        display: flex;
+        margin-top: 30px;
+        margin-bottom:30px;
+        justify-content: center;
+        align-items: center;
+        width:60%;
+        align-items:center;
+        /* flex-wrap: wrap; */
+        
+    }
+
+    .news-content {
+       
+        /* margin-right: 60px; */
+        width:50%;
+        padding: 0 5%;
+        margin-right: 100px;
+    }
+
+
+    .news-image {
+    
+        flex-shrink: 0;
+        width: 200px;
+        height: 200px;
+    }
+
+    img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    }
+
+    .read-more-btn {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 0.5rem;
+    }
+
+
+    .read-more-btn:hover {
+        background-color: #0099ff;
+    }
+
+    .StilButonArhiva{
+        
+        background-color: #007BFF;
+        color: #fff;
+        padding: 9px 25px;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 0.5rem;
+
+    }
+
+
+
+    p{
+        text-align: justify;
+        text-justify: inter-word;
+    }
+
+    body {
+    font-size: 16px;
+    }
+
+
+    .detailsT {
+        color: #333;
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    .detailsP {
+        line-height: 1.6;
+        text-align: center;
+    }
+
+
+    .containerpagina {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .containercontinut
+    {
+        width:70%;
+    }
+
+    img.cover {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin-top:30px;
+        margin-bottom: 50px;
+
+    }
+
+    img.rounded {
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        margin-right: 22px;
+    }
+
+
+    
+</style>
+
+<body>
+    <!-- <meniu-principal></meniu-principal> -->
+    <meniu-principal></meniu-principal>
+
+    <script>
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const newsContainer = document.getElementById("newsContainer");
+            const newsDetailPage = document.getElementById("newsDetailPage");
+            const hashId = window.location.hash.substring(1);
+
+
+            
+            fetch('https://localhost:7260/api/News/getNews/'+hashId)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    
+                    showNewsDetail(data);
+                    
+                })
+                .catch(error => console.error('Error fetching data:', error));
+
+
+            // Function to calculate average time based on 183 words per minute
+
+            
+            function DataInString(newsdate)
+            {
+                const datastire = new Date(newsdate);
+
+
+                
+                const day = datastire.getDate();
+                const month = datastire.getMonth()+1; // January is 0, so we add 1
+                const year = datastire.getFullYear();
+                var DataCorectata;
+
+                if(day<10 && month<10)
+                    DataCorectata = `0${day}/0${month}/${year}`;
+                else if(day<10)
+                    DataCorectata = `0${day}/${month}/${year}`;
+                    else if(month<10)
+                        DataCorectata = `${day}/0${month}/${year}`;
+                    else
+                        DataCorectata = `${day}/${month}/${year}`;
+
+                return DataCorectata;
+
+            }
+
+            function showNewsDetail(newsItem) {
+                // Hide the main news container
+                document.getElementById("newsDetailPage").style.display = "block";
+
+                // Update the content of the detail page based on the selected news item
+                document.getElementById("detailTitle").innerText = newsItem.Name || "Default Title";
+                //document.getElementById("detailPublishedDate").innerText = newsItem.PublishedDate || "Default Date";
+                document.getElementById("detailPublishedDate").innerText = DataInString(newsItem.PublishedDate);
+                document.getElementById("detailDescription").innerHTML = newsItem.Content || "Default Description";
+                
+                document.getElementById("detailImage").src = newsItem.ImageBase64 || "Default Image URL";
+                document.getElementById("detailAverageTime").innerText = `${calculateAverageTime(newsItem.Description)}`;
+                document.getElementById("detailAuthorName").innerText = `Maria Popescu`
+                document.getElementById("pretextAverageTime").innerText = ` • 🕒 `
+                //document.getElementById("authorImage").src = download.png || "Default Image URL";
+                document.getElementById("authorImage").setAttribute("src", "writer.jpg" || "Default Image URL");
+
+                //var authorImage = document.getElementById("authorImage");
+                //authorImage.setAttribute("src", "download.png" || "Default Image URL");
+                //authorImage.classList.add("rounded");
+
+
+            }
+
+            function calculateAverageTime(text) {
+                const wordsPerMinute = 183;
+                const words = text.split(' ').length;
+                const averageTime = Math.ceil(words / wordsPerMinute);
+
+                if(averageTime<2)
+                return averageTime + ' minut';
+                else if (averageTime > 1 && averageTime < 20)
+                return averageTime + ' minute';
+                else
+                return averageTime + ' de minute'
+            }
+            
+            window.addEventListener('popstate', function(event) {
+                location.reload();
+            });
+
+        });
+    </script>
+
+
+    <!-- <div id="newsContainer"></div> -->
+
+    <div id="newsDetailPage">
+    
+        <div class="containerpagina">
+            <div class="containercontinut">
+    
+            <h2 id="detailTitle" class="detailsT"></h2>
+    
+            <div style="display: flex;">
+            
+                
+                <!-- <img src="download.png" class="rounded"> -->
+                <img id="authorImage" class="rounded">
+                
+    
+    
+                <div style="height:80px; margin-top:20px;">
+                    <!---->
+                        <a id="detailAuthorName" href="#"></a> 
+    
+                    <div>
+                        <a id="detailPublishedDate"></a> <!---->
+                        <a id ="pretextAverageTime"></a>
+    
+                        <a id="detailAverageTime"></a>
+    
+                    </div>
+                    <!----->
+    
+                </div>
+                
+    
+            </div>
+    
+    
+            <img id="detailImage" class="cover">
+            <p id="detailDescription" class="detailsP"></p>
+            </div>
+            
+        </div>
+    
+    </div>
+
+<!-- Add more news items as needed -->
+    <subsol-principal></subsol-principal>
+</body>
+</html>
