@@ -219,7 +219,7 @@
 
             var inputDateTime = new Date(inputDate);
             var currentDate = new Date();
-
+            inputDateTime.setHours(inputDateTime.getHours() + 2); //Publicarea are o diferenta de 2 ore
             var timeDifference = currentDate.getTime() - inputDateTime.getTime();
 
             var seconds = Math.floor(timeDifference / 1000);
