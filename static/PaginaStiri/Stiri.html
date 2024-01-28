@@ -163,7 +163,7 @@
 
             var inputDateTime = new Date(inputDate);
             var currentDate = new Date();
-            inputDateTime.setHours(inputDateTime.getHours() + 2); //Publicarea are o diferenta de 2 ore
+            inputDateTime.setHours(inputDateTime.getHours() + 2); //Publicarea are o diferenta de cateva ore
             var timeDifference = currentDate.getTime() - inputDateTime.getTime();
 
             var seconds = Math.floor(timeDifference / 1000);
@@ -173,6 +173,48 @@
             var weeks = Math.floor(days / 7);
             var months = Math.floor(days / 30.44); // 30.44 zile pe luna
             var years = Math.floor(days / 365);
+
+            const year1 = currentDate.getFullYear();
+            const month1 = currentDate.getMonth();
+            const day1 = currentDate.getDate();
+
+            const year2 = inputDateTime.getFullYear();
+            const month2 = inputDateTime.getMonth();
+            const day2 = inputDateTime.getDate();
+            
+            if(timeDifference<0 && year1===year2 && month1===month2 && day1===day2)
+            {
+                inputDateTime.setHours(inputDateTime.getHours() - 3);
+
+                timeDifference = currentDate.getTime() - inputDateTime.getTime();
+
+                seconds = Math.floor(timeDifference / 1000);
+                minutes = Math.floor(seconds / 60);
+                hours = Math.floor(minutes / 60);
+                days = Math.floor(hours / 24);
+
+                if (seconds < 60) {                
+                if(seconds<20)
+                return (seconds === 1) ? 'acum ' + seconds + ' secundă' : 'acum ' + seconds + ' secunde';
+                else
+                return 'acum ' + seconds + ' de secunde';
+
+                } else if (minutes < 60) {
+                if(minutes<20)
+                return (minutes === 1) ? 'acum ' + minutes + ' minut' : 'acum ' + minutes + ' minute';
+                else
+                return 'acum ' + minutes + ' de minute';
+                } else if (hours < 24) {
+                if(hours < 20)
+                return (hours === 1) ? 'acum ' + hours + ' oră' : 'acum ' + hours + ' ore';
+                else
+                return 'acum ' + hours + ' de ore'
+                }
+                
+            }   
+                
+                
+
             
             if(timeDifference<0)
                 return `${inputDateTime.getDate()}/${inputDateTime.getMonth()+1}/${inputDateTime.getFullYear()}`;
