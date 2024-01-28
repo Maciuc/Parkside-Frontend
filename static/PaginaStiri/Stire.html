@@ -1,46 +1,11 @@
 <html>
 <head>
     <script src="/static/MeniuPrincipal.js" type="module"></script>
-    <!-- <script src="/static/PaginaPrincipala/PanouStiriPrincipale.js" type="module"></script> -->
     <script src="/static/SubsolPrincipal.js" type="module"></script>
     <link rel="stylesheet" href="/static/index.css">
 </head>
-    <!-- <panou-stiri-principale></panou-stiri-principale> -->
+
 <style>
-
-    .news-whole-container
-    {
-        display: flex;
-        justify-content: center;
-    }
-
-    .news-content-container {
-        display: flex;
-        margin-top: 30px;
-        margin-bottom:30px;
-        justify-content: center;
-        align-items: center;
-        width:60%;
-        align-items:center;
-        /* flex-wrap: wrap; */
-        
-    }
-
-    .news-content {
-       
-        /* margin-right: 60px; */
-        width:50%;
-        padding: 0 5%;
-        margin-right: 100px;
-    }
-
-
-    .news-image {
-    
-        flex-shrink: 0;
-        width: 200px;
-        height: 200px;
-    }
 
     img {
     max-width: 100%;
@@ -48,32 +13,6 @@
     object-fit: cover;
     display: block;
     }
-
-    .read-more-btn {
-        background-color: #007BFF;
-        color: #fff;
-        padding: 8px 16px;
-        text-decoration: none;
-        display: inline-block;
-        border-radius: 0.5rem;
-    }
-
-
-    .read-more-btn:hover {
-        background-color: #0099ff;
-    }
-
-    .StilButonArhiva{
-        
-        background-color: #007BFF;
-        color: #fff;
-        padding: 9px 25px;
-        text-decoration: none;
-        display: inline-block;
-        border-radius: 0.5rem;
-
-    }
-
 
 
     p{
@@ -129,7 +68,7 @@
 </style>
 
 <body>
-    <!-- <meniu-principal></meniu-principal> -->
+
     <meniu-principal></meniu-principal>
 
     <script>
@@ -158,8 +97,6 @@
                 .catch(error => console.error('Error fetching data:', error));
 
 
-            // Function to calculate average time based on 183 words per minute
-
             
             function DataInString(newsdate)
             {
@@ -186,25 +123,17 @@
             }
 
             function showNewsDetail(newsItem) {
-                // Hide the main news container
                 document.getElementById("newsDetailPage").style.display = "block";
 
-                // Update the content of the detail page based on the selected news item
                 document.getElementById("detailTitle").innerText = newsItem.Name || "Default Title";
-                //document.getElementById("detailPublishedDate").innerText = newsItem.PublishedDate || "Default Date";
                 document.getElementById("detailPublishedDate").innerText = DataInString(newsItem.PublishedDate);
                 document.getElementById("detailDescription").innerHTML = newsItem.Content || "Default Description";
                 
                 document.getElementById("detailImage").src = newsItem.ImageBase64 || "Default Image URL";
                 document.getElementById("detailAverageTime").innerText = `${calculateAverageTime(newsItem.Description)}`;
-                document.getElementById("detailAuthorName").innerText = `Maria Popescu`
+                document.getElementById("detailAuthorName").innerText = `Nume Autor`
                 document.getElementById("pretextAverageTime").innerText = ` • 🕒 `
-                //document.getElementById("authorImage").src = download.png || "Default Image URL";
                 document.getElementById("authorImage").setAttribute("src", "writer.jpg" || "Default Image URL");
-
-                //var authorImage = document.getElementById("authorImage");
-                //authorImage.setAttribute("src", "download.png" || "Default Image URL");
-                //authorImage.classList.add("rounded");
 
 
             }
@@ -230,7 +159,6 @@
     </script>
 
 
-    <!-- <div id="newsContainer"></div> -->
 
     <div id="newsDetailPage">
     
@@ -242,23 +170,22 @@
             <div style="display: flex;">
             
                 
-                <!-- <img src="download.png" class="rounded"> -->
                 <img id="authorImage" class="rounded">
                 
     
     
                 <div style="height:80px; margin-top:20px;">
-                    <!---->
+                    
                         <a id="detailAuthorName" href="#"></a> 
     
                     <div>
-                        <a id="detailPublishedDate"></a> <!---->
+                        <a id="detailPublishedDate"></a> 
                         <a id ="pretextAverageTime"></a>
     
                         <a id="detailAverageTime"></a>
     
                     </div>
-                    <!----->
+                    
     
                 </div>
                 
@@ -273,8 +200,7 @@
         </div>
     
     </div>
-
-<!-- Add more news items as needed -->
+    
     <subsol-principal></subsol-principal>
 </body>
 </html>

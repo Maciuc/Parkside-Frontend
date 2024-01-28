@@ -63,19 +63,6 @@
         background-color: #0099ff;
     }
 
-    .StilButonArhiva{
-        
-        background-color: #007BFF;
-        color: #fff;
-        padding: 9px 25px;
-        text-decoration: none;
-        display: inline-block;
-        border-radius: 0.5rem;
-
-    }
-
-
-
     p{
         text-align: justify;
         text-justify: inter-word;
@@ -86,55 +73,16 @@
     }
 
 
-    .detailsT {
-        color: #333;
-        font-size: 3rem;
-        text-align: center;
-    }
-
-    .detailsP {
-        line-height: 1.6;
-        text-align: center;
-    }
-
-
-    .containerpagina {
-        display: flex;
-        justify-content: center;
-    }
-    
-    .containercontinut
-    {
-        width:70%;
-    }
-
-    img.cover {
-        width: 100%;
-        height: auto;
-        display: block;
-        margin-top:30px;
-        margin-bottom: 50px;
-
-    }
-
-    img.rounded {
-        border-radius: 50%;
-        width: 80px;
-        height: 80px;
-        margin-right: 22px;
-    }
 
 
     
 </style>
 
 <body>
-    <!-- <meniu-principal></meniu-principal> -->
     <meniu-principal></meniu-principal>
 
     <script>
         const currentURL = window.location.href;
-        // const newURL = window.location.href;
 
         
         document.addEventListener('DOMContentLoaded', function() {
@@ -151,7 +99,7 @@
                     return response.json();
                 })
                 .then(data => {
-            // Sort the news items by date in descending order
+
             data.sort((a, b) => new Date(b.PublishedDate) - new Date(a.PublishedDate));
 
             data.forEach((newsItem, index) => {
@@ -179,7 +127,7 @@
                 readMoreLink.href = "Stire.html" + "#" + newsItem.Id;
 
                 const authorElement = document.createElement("p");
-                authorElement.innerText = "Maria Popescu ✒️";
+                authorElement.innerText = "Nume Autor ✒️";
 
                 contentDiv.appendChild(publishedDateElement);
                 contentDiv.appendChild(titleElement);
@@ -208,14 +156,10 @@
             
         });
 
-                    // Function to calculate average time based on 183 words per minute
 
             function getTimeElapsed(inputDate) 
             {
-            // var dateParts = inputDate.split('/');
-            // var day = parseInt(dateParts[0], 10);
-            // var month = parseInt(dateParts[1], 10) - 1;
-            // var year = parseInt(dateParts[2], 10);
+
 
             var inputDateTime = new Date(inputDate);
             var currentDate = new Date();
@@ -266,9 +210,7 @@
 
     <div id="newsContainer"></div>
 
-    
 
-<!-- Add more news items as needed -->
     <subsol-principal></subsol-principal>
 </body>
 </html>
