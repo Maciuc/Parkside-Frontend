@@ -141,7 +141,7 @@
                 document.getElementById("detailDescription").innerHTML = newsItem.Content || "Default Description";
                 
                 document.getElementById("detailImage").src = newsItem.ImageBase64 || "Default Image URL";
-                document.getElementById("detailAverageTime").innerText = `${calculateAverageTime(newsItem.Description)}`;
+                document.getElementById("detailAverageTime").innerText = `${calculateAverageTime(newsItem.Content)}`;
                 document.getElementById("detailAuthorName").innerText = `Maria Popescu`
                 document.getElementById("authorImage").setAttribute("src", "../imagini/writer.png" || "Default Image URL");
 
