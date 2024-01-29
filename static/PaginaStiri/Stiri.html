@@ -14,25 +14,6 @@
         justify-content: center;
     }
 
-    .news-content-container {
-        display: flex;
-        margin-top: 30px;
-        margin-bottom:30px;
-        justify-content: center;
-        align-items: center;
-        width:60%;
-        align-items:center;
-        /* flex-wrap: wrap; */
-        
-    }
-
-    .news-content {
-       
-        /* margin-right: 60px; */
-        width:50%;
-        padding: 0 5%;
-        margin-right: 100px;
-    }
 
 
     .news-image {
@@ -71,6 +52,93 @@
     body {
     font-size: 16px;
     }
+
+    .authorstyle
+    {
+        margin-top:0.45rem;
+        color: #333;
+        /* font-style:italic; */
+    }
+
+    .averagetimestyle
+    {
+        margin-top:1.2rem;
+        margin-bottom:0.45rem;
+        color: #333;
+    }
+
+    .datestyle
+    {
+        color: #333;
+    }
+
+
+@media (max-width: 850px) {
+    
+    .news-content-container {
+        display: flex;
+        margin-top: 30px;
+        margin-bottom:30px;
+        justify-content: center;
+        align-items: center;
+        width:100%;
+        align-items:center;
+        
+    }
+
+    .news-content {
+       
+        width:50%;
+        padding: 0 5%;
+        margin-right: 20px;
+    }
+
+}
+
+@media (min-width: 851px) and (max-width: 1322px) {
+    .news-content-container {
+        display: flex;
+        margin-top: 30px;
+        margin-bottom:30px;
+        justify-content: center;
+        align-items: center;
+        width:80%;
+        align-items:center;
+        
+    }
+
+    .news-content {
+       
+        width:50%;
+        padding: 0 5%;
+        margin-right: 100px;
+    }
+
+
+}
+
+@media (min-width: 1323px) {
+    
+    .news-content-container {
+        display: flex;
+        margin-top: 30px;
+        margin-bottom:30px;
+        justify-content: center;
+        align-items: center;
+        width:60%;
+        align-items:center;
+        
+    }
+
+    .news-content {
+       
+        width:40%;
+        padding: 0 5%;
+        margin-right: 150px;
+    }
+
+}
+
 
 
 
@@ -112,8 +180,15 @@
                 const contentDiv = document.createElement("div");
                 contentDiv.className = "news-content";
 
-                const publishedDateElement = document.createElement("p");
-                publishedDateElement.innerText = "📅 " + getTimeElapsed(newsItem.PublishedDate) || "Default Date";
+                const averageTime = document.createElement("p");
+                averageTime.className ="averagetimestyle"
+                averageTime.innerText = "🕒 "+ calculateAverageTime(newsItem.Content);
+
+                const DateAndTimeReadElement = document.createElement("p");
+                DateAndTimeReadElement.className="datestyle";
+                DateAndTimeReadElement.innerText = "📅 " + getTimeElapsed(newsItem.PublishedDate) || "Default Date";
+
+
                 const titleElement = document.createElement("h2");
                 titleElement.innerText = newsItem.Name || "Default Title";
 
@@ -127,13 +202,18 @@
                 readMoreLink.href = "Stire.html" + "#" + newsItem.Id;
 
                 const authorElement = document.createElement("p");
-                authorElement.innerText = "Maria Popescu ✒️";
+                authorElement.className = "authorstyle";
+                authorElement.innerHTML = "Maria Popescu ✒️";
 
-                contentDiv.appendChild(publishedDateElement);
+
+
+                contentDiv.appendChild(DateAndTimeReadElement);
                 contentDiv.appendChild(titleElement);
                 contentDiv.appendChild(descriptionElement);
                 contentDiv.appendChild(readMoreLink);
+                contentDiv.appendChild(averageTime);
                 contentDiv.appendChild(authorElement);
+                
 
                 const imageElement = document.createElement("img");
                 imageElement.src = newsItem.ImageBase64 || "Default Image URL";
@@ -155,6 +235,20 @@
                     
             
         });
+
+
+        function calculateAverageTime(text) {
+                const wordsPerMinute = 183;
+                const words = text.split(' ').length;
+                const averageTime = Math.ceil(words / wordsPerMinute);
+
+                if(averageTime<2)
+                return averageTime + ' min de citit';
+                else if (averageTime > 1 && averageTime < 20)
+                return averageTime + ' min de citit';
+                else
+                return averageTime + ' de min de citit'
+            }
 
 
             function getTimeElapsed(inputDate) 
