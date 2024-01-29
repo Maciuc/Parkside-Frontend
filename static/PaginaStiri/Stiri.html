@@ -1,381 +1,264 @@
 <html>
-<head>
-    <script src="/static/MeniuPrincipal.js" type="module"></script>
-    <!-- <script src="/static/PaginaPrincipala/PanouStiriPrincipale.js" type="module"></script> -->
-    <script src="/static/SubsolPrincipal.js" type="module"></script>
-    <link rel="stylesheet" href="/static/index.css">
-</head>
+    <head>
+        <script src="/static/MeniuPrincipal.js" type="module"></script>
+        <!-- <script src="/static/PaginaPrincipala/PanouStiriPrincipale.js" type="module"></script> -->
+        <script src="/static/SubsolPrincipal.js" type="module"></script>
+        <link rel="stylesheet" href="/static/index.css">
+    </head>
     <!-- <panou-stiri-principale></panou-stiri-principale> -->
-<style>
+    <style>
 
-    .news-whole-container
-    {
-        display: flex;
-        justify-content: center;
-    }
+        .news-whole-container
+        {
+            display: flex;
+            justify-content: center;
+        }
 
-    .news-content-container {
-        display: flex;
-        margin-top: 30px;
-        margin-bottom:30px;
-        justify-content: center;
-        align-items: center;
-        width:60%;
-        align-items:center;
-        /* flex-wrap: wrap; */
+        .news-content-container {
+            display: flex;
+            margin-top: 30px;
+            margin-bottom:30px;
+            justify-content: center;
+            align-items: center;
+            width:60%;
+            align-items:center;
+            /* flex-wrap: wrap; */
+            
+        }
+
+        .news-content {
         
-    }
-
-    .news-content {
-       
-        /* margin-right: 60px; */
-        width:50%;
-        padding: 0 5%;
-        margin-right: 100px;
-    }
+            /* margin-right: 60px; */
+            width:50%;
+            padding: 0 5%;
+            margin-right: 100px;
+        }
 
 
-    .news-image {
-    
-        flex-shrink: 0;
-        width: 200px;
-        height: 200px;
-    }
-
-    img {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    }
-
-    .read-more-btn {
-        background-color: #007BFF;
-        color: #fff;
-        padding: 8px 16px;
-        text-decoration: none;
-        display: inline-block;
-        border-radius: 0.5rem;
-    }
-
-    .StilButonArhiva{
+        .news-image {
         
-        background-color: #007BFF;
-        color: #fff;
-        padding: 9px 25px;
-        text-decoration: none;
-        display: inline-block;
-        border-radius: 0.5rem;
+            flex-shrink: 0;
+            width: 200px;
+            height: 200px;
+        }
 
-    }
-
-
-
-    p{
-        text-align: justify;
-        text-justify: inter-word;
-    }
-
-    body {
-    font-size: 16px;
-    }
-
-
-    .detailsT {
-        color: #333;
-        font-size: 3rem;
-        text-align: center;
-    }
-
-    .detailsP {
-        line-height: 1.6;
-        text-align: center;
-    }
-
-
-    .containerpagina {
-        display: flex;
-        justify-content: center;
-    }
-    
-    .containercontinut
-    {
-        width:70%;
-    }
-
-    img.cover {
-        width: 100%;
+        img {
+        max-width: 100%;
         height: auto;
+        object-fit: cover;
         display: block;
-        margin-top:30px;
-        margin-bottom: 50px;
+        }
 
-    }
-
-    img.rounded {
-        border-radius: 50%;
-        width: 80px;
-        height: 80px;
-        margin-right: 22px;
-    }
-
-
-    
-</style>
-
-<body>
-    <!-- <meniu-principal></meniu-principal> -->
+        .read-more-btn {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 0.5rem;
+        }
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const newsContainer = document.getElementById("newsContainer");
-            const newsDetailPage = document.getElementById("newsDetailPage");
+        .read-more-btn:hover {
+            background-color: #0099ff;
+        }
 
-            if (!window.location.hash) {
-            // If hash is empty, show the main news container
-            document.getElementById("newsContainer").style.display = "block";
-            document.getElementById("newsDetailPage").style.display = "none";
-            }
+        p{
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        body {
+        font-size: 16px;
+        }
+
+
+
+
+        
+    </style>
+
+    <body>
+        <meniu-principal></meniu-principal>
+
+        <script>
+            const currentURL = window.location.href;
+
             
-            fetch('https://localhost:7260/api/News/getLatestPrimaryNewses')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    
-                    data.forEach((newsItem, index) => {
-                        const wholeContainer = document.createElement("div");
-                        wholeContainer.className = "news-whole-container";
+            document.addEventListener('DOMContentLoaded', function() {
 
-                        const contentContainer = document.createElement("div");
-                        contentContainer.className = "news-content-container";
+                
+                const newsContainer = document.getElementById("newsContainer");
 
-                        const contentDiv = document.createElement("div");
-                        contentDiv.className = "news-content";
-
-                        const publishedDateElement = document.createElement("p");
-                        publishedDateElement.innerText = getTimeElapsed(newsItem.PublishedDate) || "Default Date";
-
-                        const titleElement = document.createElement("h2");
-                        titleElement.innerText = newsItem.Name || "Default Title";
-
-                        const descriptionElement = document.createElement("p");
-                        descriptionElement.innerText = newsItem.Description || "Default Description";
-
-                        const readMoreLink = document.createElement("a");
-                        readMoreLink.href = `javascript:void(0);`; // prevent page reload
-                        readMoreLink.className = "read-more-btn";
-                        readMoreLink.innerText = "👉 Află mai multe";
-
-                        const authorElement = document.createElement("p");
-                        authorElement.innerText = "Autor: Maria Popescu";
-
-                        contentDiv.appendChild(publishedDateElement);
-                        contentDiv.appendChild(titleElement);
-                        contentDiv.appendChild(descriptionElement);
-                        contentDiv.appendChild(readMoreLink);
-                        contentDiv.appendChild(authorElement);
-
-                        const imageElement = document.createElement("img");
-                        imageElement.src = newsItem.ImageBase64 || "Default Image URL";
-                        imageElement.alt = "News Image";
-                        imageElement.className = "news-image";
-
-                        contentContainer.appendChild(contentDiv);
-                        contentContainer.appendChild(imageElement);
-
-                        wholeContainer.appendChild(contentContainer);
-
-                        newsContainer.appendChild(wholeContainer);
-
-                        // Handle click event for the "Read more" link
-                        readMoreLink.addEventListener('click', function() {
-                        showNewsDetail(newsItem);
-                        // Update hash when a news detail is clicked
-                        window.location.hash = `#${newsItem.Id}`;
-                        
-                        });
-
-                        if (window.location.hash) {
-                            const hashId = window.location.hash.substring(1);
-                            const newsItem = data.find(item => item.Id.toString() === hashId);
-                    if (newsItem) {
-                        showNewsDetail(newsItem);
-                        } 
-                            else {
-                                // Handle the case where the news item with the specified Id is not found
-                                console.error(`News item with Id ${hashId} not found.`);
-                            }
+                
+                fetch('https://localhost:7260/api/News/getHomePageNewses')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
                         }
+                        return response.json();
+                    })
+                    .then(data => {
 
+                data.sort((a, b) => new Date(b.PublishedDate) - new Date(a.PublishedDate));
 
-                    });
-                })
-                .catch(error => console.error('Error fetching data:', error));
+                data.forEach((newsItem, index) => {
+                    const wholeContainer = document.createElement("div");
+                    wholeContainer.className = "news-whole-container";
 
-            // Function to show news detail
-            function showNewsDetail(newsItem) {
-                const meniuPrincipal = document.querySelector('meniu-principal');
-                // Hide the main news container
-                document.getElementById("newsContainer").style.display = "none";
-                // Show the detail page
-                document.getElementById("newsDetailPage").style.display = "block";
+                    const contentContainer = document.createElement("div");
+                    contentContainer.className = "news-content-container";
 
-                // Update the content of the detail page based on the selected news item
-                document.getElementById("detailTitle").innerText = newsItem.Name || "Default Title";
-                document.getElementById("detailPublishedDate").innerText = newsItem.PublishedDate || "Default Date";
-                document.getElementById("detailDescription").innerText = newsItem.Description || "Default Description";
-                
-                document.getElementById("detailImage").src = newsItem.ImageBase64 || "Default Image URL";
-                document.getElementById("detailAverageTime").innerText = calculateAverageTime(newsItem.Description);
-                document.getElementById("detailAuthorName").innerText = `Maria Popescu`
-                document.getElementById("pretextAverageTime").innerText = ` • 🕒 `
-                document.getElementById("authorImage").setAttribute("src", "../imagini/autor.png" || "Default Image URL");
+                    const contentDiv = document.createElement("div");
+                    contentDiv.className = "news-content";
 
-                meniuPrincipal.scrollIntoView({ behavior: "smooth", block: "start" });
-                //newsDetailPage.scrollIntoView();
+                    const publishedDateElement = document.createElement("p");
+                    publishedDateElement.innerText = "📅 " + getTimeElapsed(newsItem.PublishedDate) || "Default Date";
+                    const titleElement = document.createElement("h2");
+                    titleElement.innerText = newsItem.Name || "Default Title";
 
-            }
+                    const descriptionElement = document.createElement("p");
+                    descriptionElement.innerText = newsItem.Description || "Default Description";
 
-            // Function to calculate average time based on 183 words per minute
+                    const readMoreLink = document.createElement("a");
+                    readMoreLink.href = `javascript:void(0);`; // prevent page reload ?
+                    readMoreLink.className = "read-more-btn";
+                    readMoreLink.innerText = "👉 Află mai multe";
+                    readMoreLink.href = "Stire.html" + "#" + newsItem.Id;
 
-            function getTimeElapsed(inputDate) 
-            {
-            var dateParts = inputDate.split('/');
-            var day = parseInt(dateParts[0], 10);
-            var month = parseInt(dateParts[1], 10) - 1;
-            var year = parseInt(dateParts[2], 10);
+                    const authorElement = document.createElement("p");
+                    authorElement.innerText = "Maria Popescu ✒️";
 
-            var inputDateTime = new Date(year, month, day);
-            var currentDate = new Date();
+                    contentDiv.appendChild(publishedDateElement);
+                    contentDiv.appendChild(titleElement);
+                    contentDiv.appendChild(descriptionElement);
+                    contentDiv.appendChild(readMoreLink);
+                    contentDiv.appendChild(authorElement);
 
-            var timeDifference = currentDate.getTime() - inputDateTime.getTime();
+                    const imageElement = document.createElement("img");
+                    imageElement.src = newsItem.ImageBase64 || "Default Image URL";
+                    imageElement.alt = "News Image";
+                    imageElement.className = "news-image";
 
-            var seconds = Math.floor(timeDifference / 1000);
-            var minutes = Math.floor(seconds / 60);
-            var hours = Math.floor(minutes / 60);
-            var days = Math.floor(hours / 24);
-            var weeks = Math.floor(days / 7);
-            var months = Math.floor(days / 30.44); // 30.44 zile pe luna
-            var years = Math.floor(days / 365);
+                    contentContainer.appendChild(contentDiv);
+                    contentContainer.appendChild(imageElement);
+
+                    wholeContainer.appendChild(contentContainer);
+
+                    newsContainer.appendChild(wholeContainer);
+                });
+
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
             
-
-           // if(timeDifference < 0)
-               // return 'Va urma...' // Data introdusa e in viitor...            
-             if (seconds < 60) {
-                return (seconds === 1) ? 'acum ' + seconds + ' secundă' : 'acum ' + seconds + ' secunde';
-            } else if (minutes < 60) {
-                return (minutes === 1) ? 'acum ' + minutes + ' minut' : 'acum ' + minutes + ' minute';
-            } else if (hours < 24) {
-                return (hours === 1) ? 'acum ' + hours + ' oră' : 'acum ' + hours + ' ore';
-            } else if (days < 7) {
-                return (days === 1) ? 'acum ' + days + ' zi' : 'acum ' + days + ' zile';
-            } else if (weeks < 4.34) { // 30.44 zile pe luna
-                return (weeks === 1) ? 'acum ' + weeks + ' săptămână' : 'acum ' + weeks + ' săptămâni';
-            } else if (months < 12) {
-                return (months === 1) ? 'acum ' + months + ' lună' : 'acum ' + months + ' luni';
-            } else {
-                return (years === 1) ? 'acum ' + years + ' an' : 'acum ' + years + ' ani';
-            }
-            }
-
-
-            function calculateAverageTime(text) {
-                const wordsPerMinute = 183;
-                const words = text.split(' ').length;
-                const averageTime = Math.ceil(words / wordsPerMinute);
-
-                if(averageTime<2)
-                return averageTime + ' minut';
-                else if (averageTime > 1 && averageTime < 20)
-                return averageTime + ' minute';
-                else
-                return averageTime + ' de minute'
-            }
-
-            // Function to go back to the main news container
-            window.goBack = function() {
-                document.getElementById("newsContainer").style.display = "block";
-                document.getElementById("newsDetailPage").style.display = "none";
-                // Clear the hash to go back to the main news container
-                window.location.hash = "";
+                        
                 
-            };
+            });
 
-            window.addEventListener('hashchange', function() {
-            if (!window.location.hash) {
-                // If hash is empty, go back to the main news container
-                goBack();
-            } else {
-                //location.reload();
-                document.getElementById("newsContainer").style.display = "none";
-                document.getElementById("newsDetailPage").style.display = "block";
-                const index = parseInt(window.location.hash.substring(1), 10);
-                const newsItem = data[index];
-                showNewsDetail(newsItem);
+
+                function getTimeElapsed(inputDate) 
+                {
+
+
+                var inputDateTime = new Date(inputDate);
+                var currentDate = new Date();
+                inputDateTime.setHours(inputDateTime.getHours() + 2); //Publicarea are o diferenta de cateva ore
+                var timeDifference = currentDate.getTime() - inputDateTime.getTime();
+
+                var seconds = Math.floor(timeDifference / 1000);
+                var minutes = Math.floor(seconds / 60);
+                var hours = Math.floor(minutes / 60);
+                var days = Math.floor(hours / 24);
+                var weeks = Math.floor(days / 7);
+                var months = Math.floor(days / 30.44); // 30.44 zile pe luna
+                var years = Math.floor(days / 365);
+
+            // if(timeDifference < 0)
+                // return 'Va urma...' // Data introdusa e in viitor...            
+                if (seconds < 60) {
+
+                const year1 = currentDate.getFullYear();
+                const month1 = currentDate.getMonth();
+                const day1 = currentDate.getDate();
+
+                const year2 = inputDateTime.getFullYear();
+                const month2 = inputDateTime.getMonth();
+                const day2 = inputDateTime.getDate();
                 
+                if(timeDifference<0 && year1===year2 && month1===month2 && day1===day2)
+                {
+                    inputDateTime.setHours(inputDateTime.getHours() - 3);
+
+                    timeDifference = currentDate.getTime() - inputDateTime.getTime();
+
+                    seconds = Math.floor(timeDifference / 1000);
+                    minutes = Math.floor(seconds / 60);
+                    hours = Math.floor(minutes / 60);
+                    days = Math.floor(hours / 24);
+
+                    if (seconds < 60) {                
+                    if(seconds<20)
+
+                    return (seconds === 1) ? 'acum ' + seconds + ' secundă' : 'acum ' + seconds + ' secunde';
+                    else
+                    return 'acum ' + seconds + ' de secunde';
+
+                    } else if (minutes < 60) {
+                    if(minutes<20)
+                    return (minutes === 1) ? 'acum ' + minutes + ' minut' : 'acum ' + minutes + ' minute';
+                    else
+                    return 'acum ' + minutes + ' de minute';
+                    } else if (hours < 24) {
+                    if(hours < 20)
+                    return (hours === 1) ? 'acum ' + hours + ' oră' : 'acum ' + hours + ' ore';
+                    else
+                    return 'acum ' + hours + ' de ore'
+                    }
+                    
+                }   
+                    
+                    
+
                 
+                if(timeDifference<0)
+                    return `${inputDateTime.getDate()}/${inputDateTime.getMonth()+1}/${inputDateTime.getFullYear()}`;
+                else if (seconds < 60) {                
+                    if(seconds<20)
+                    return (seconds === 1) ? 'acum ' + seconds + ' secundă' : 'acum ' + seconds + ' secunde';
+                    else
+                    return 'acum ' + seconds + ' de secunde';
+
+                } else if (minutes < 60) {
+                    if(minutes<20)
+                    return (minutes === 1) ? 'acum ' + minutes + ' minut' : 'acum ' + minutes + ' minute';
+                    else
+                    return 'acum ' + minutes + ' de minute';
+                } else if (hours < 24) {
+                    if(hours < 20)
+                    return (hours === 1) ? 'acum ' + hours + ' oră' : 'acum ' + hours + ' ore';
+                    else
+                    return 'acum ' + hours + ' de ore'
+                } else if (days < 7) {
+                    return (days === 1) ? 'acum ' + days + ' zi' : 'acum ' + days + ' zile';
+                } else if (weeks < 4.34) { // 30.44 zile pe luna
+                    return (weeks === 1) ? 'acum ' + weeks + ' săptămână' : 'acum ' + weeks + ' săptămâni';
+                } else if (months < 12) {
+                    return (months === 1) ? 'acum ' + months + ' lună' : 'acum ' + months + ' luni';
+                } else {
+                    if(years<20)
+                    return (years === 1) ? 'acum ' + years + ' an' : 'acum ' + years + ' ani';
+                    else
+                    return 'acum ' + years + ' de ani'
+                }
+                }
             }
-        });
-
-        });
-    </script>
-
-<meniu-principal></meniu-principal>
-
-    <div id="newsContainer"></div>
+        </script>
 
 
-    <div id="newsDetailPage">
-    
-    <div class="containerpagina">
-        <div class="containercontinut">
-
-        <h2 id="detailTitle" class="detailsT"></h2>
-
-        <div style="display: flex;">
-        
-            
-            <img id="authorImage" class="rounded">
-            
+        <div id="newsContainer"></div>
 
 
-            <div style="height:80px; margin-top:20px;">
-                <!---->
-                    <a id="detailAuthorName" href="../../acasa.html"></a> 
-
-                <div>
-                    <a id="detailPublishedDate"></a> <!---->
-                    <a id ="pretextAverageTime"></a>
-
-                    <a id="detailAverageTime"></a>
-
-                </div>
-                <!----->
-
-            </div>
-            
-
-        </div>
-
-
-        <img id="detailImage" class="cover">
-        <p id="detailDescription" class="detailsP"></p>
-        </div>
-        
-    </div>
-
-</div>
-
-
-
-    
-
-<!-- Add more news items as needed -->
-    <subsol-principal></subsol-principal>
-</body>
+        <subsol-principal></subsol-principal>
+    </body>
 </html>

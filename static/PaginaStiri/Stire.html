@@ -1,0 +1,220 @@
+<html>
+<head>
+    <script src="/static/MeniuPrincipal.js" type="module"></script>
+    <script src="/static/SubsolPrincipal.js" type="module"></script>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+
+<style>
+
+    img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    }
+
+
+    p{
+        text-align: justify;
+        text-justify: inter-word;
+    }
+
+
+    .detailsT {
+        color: #333;
+        font-size: 48px;
+        text-align: center;
+    }
+
+    .detailsP {
+        line-height: 1.6;
+        text-align: center;
+        font-size: 18px;
+    }
+
+
+    .containerpagina {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .containercontinut
+    {
+        width:70%;
+    }
+
+    img.cover {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin-top:30px;
+        margin-bottom: 50px;
+
+    }
+
+    img.rounded {
+        border-radius: 50%;
+        width: 90px;
+        height: 90px;
+        margin-right: 22px;
+    }
+
+    .authorcontainer
+    {
+        margin-bottom: 8px;
+    }
+
+    .authorstyle
+    {
+        font-size:18px;
+        font-family: Georgia;
+
+    }
+
+    .detailsstyle
+    {
+        
+        font-size:16px;
+        color: rgb(103,113,116);
+
+    }
+
+
+    #newsDetailPage {
+            display: none;
+        }
+
+
+    
+</style>
+
+<body>
+
+    <meniu-principal></meniu-principal>
+
+    <script>
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const newsContainer = document.getElementById("newsContainer");
+            const newsDetailPage = document.getElementById("newsDetailPage");
+            const hashId = window.location.hash.substring(1);
+
+
+            
+            fetch('https://localhost:7260/api/News/getNews/'+hashId)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    
+                    document.getElementById("newsDetailPage").style.display = "block";
+                    showNewsDetail(data);
+                    
+                })
+                .catch(error => console.error('Error fetching data:', error));
+
+
+            function DataInString(newsdate) {
+                const datastire = new Date(newsdate);
+                const day = datastire.getDate();
+                const romanianMonths = [
+                    "ian.", "feb.", "mar.", "apr.", "mai", "iun.",
+                    "iul.", "aug.", "sep.", "oct.", "nov.", "dec."
+                ];
+                const month = romanianMonths[datastire.getMonth()];
+                const year = datastire.getFullYear().toString().slice(-2); // Get last two digits of the year
+                return `${day} ${month}, ${year}`;
+            }
+
+
+            function showNewsDetail(newsItem) {
+                document.getElementById("newsDetailPage").style.display = "block";
+
+                document.getElementById("detailTitle").innerText = newsItem.Name || "Default Title";
+                document.getElementById("detailPublishedDate").innerText = DataInString(newsItem.PublishedDate);
+                document.getElementById("detailDescription").innerHTML = newsItem.Content || "Default Description";
+                
+                document.getElementById("detailImage").src = newsItem.ImageBase64 || "Default Image URL";
+                document.getElementById("detailAverageTime").innerText = `${calculateAverageTime(newsItem.Content)}`;
+                document.getElementById("detailAuthorName").innerText = `Maria Popescu`
+                document.getElementById("authorImage").setAttribute("src", "../imagini/writer.png" || "Default Image URL");
+
+
+            }
+
+            function calculateAverageTime(text) {
+                const wordsPerMinute = 183;
+                const words = text.split(' ').length;
+                const averageTime = Math.ceil(words / wordsPerMinute);
+
+                if(averageTime<2)
+                return averageTime + ' min de citit';
+                else if (averageTime > 1 && averageTime < 20)
+                return averageTime + ' min de citit';
+                else
+                return averageTime + ' de min de citit'
+            }
+            
+            window.addEventListener('popstate', function(event) {
+                location.reload();
+            });
+
+        });
+    </script>
+
+
+
+    <div id="newsDetailPage">
+    
+        <div class="containerpagina">
+            <div class="containercontinut">
+    
+            <h2 id="detailTitle" class="detailsT"></h2>
+    
+            <div style="display: flex;">
+            
+                
+                <img id="authorImage" class="rounded">
+                
+    
+    
+                <div style="height:80px; margin-top:14px;">
+                    
+                        <div class="authorcontainer">
+                        <a id="detailAuthorName" class = "authorstyle"></a> 
+                        </div>
+    
+                    <div class="detailsstyle" style="display: flex; align-items: center;">
+                        <img style = "width:auto; height:20px;" src="calendar.svg">
+                        <a>&nbsp;</a>
+                        <a id="detailPublishedDate"></a> 
+                        <a>&nbsp;•&nbsp;</a>
+                        <img style = "width:20px; height:20px;" src="clock.svg">
+                        <a>&nbsp;</a>
+                        <a id="detailAverageTime"></a>
+    
+                    </div>
+                    
+    
+                </div>
+                
+    
+            </div>
+    
+    
+            <img id="detailImage" class="cover">
+            <p id="detailDescription" class="detailsP"></p>
+            </div>
+            
+        </div>
+    
+    </div>
+    <subsol-principal></subsol-principal>
+</body>
+</html>
