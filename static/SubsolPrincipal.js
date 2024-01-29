@@ -14,6 +14,7 @@ class SubsolPrincipal extends HTMLElement {
                     display: flex;
                     flex-direction: row;
                     justify-content: center;
+                    text-align: center;
                     color: black;
                     font-size: 3rem;
                     padding: 2rem;

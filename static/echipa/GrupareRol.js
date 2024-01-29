@@ -1,5 +1,3 @@
-let shadow;
-
 class GrupareRol extends HTMLElement {
     static get observedAttributes() {
         return ["rol"];
@@ -11,7 +9,7 @@ class GrupareRol extends HTMLElement {
 
     render()
     {
-        shadow.innerHTML = `
+        this.shadowRoot.innerHTML = `
             <style>
                 .container {
                     display: flex;
@@ -50,12 +48,11 @@ class GrupareRol extends HTMLElement {
 
     constructor() {
         super();
-        shadow = this.attachShadow({ mode: "open" });
-
-        this.render();
+        this.attachShadow({ mode: "open" });
     }
 
     connectedCallback() {
+        this.render();
     }
 }
   

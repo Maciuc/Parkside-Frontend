@@ -264,9 +264,9 @@
             var years = Math.floor(days / 365);
             
 
-            if(timeDifference < 0)
-                return 'Va urma...' // Data introdusa e in viitor...            
-            else if (seconds < 60) {
+           // if(timeDifference < 0)
+               // return 'Va urma...' // Data introdusa e in viitor...            
+             if (seconds < 60) {
                 return (seconds === 1) ? 'acum ' + seconds + ' secundă' : 'acum ' + seconds + ' secunde';
             } else if (minutes < 60) {
                 return (minutes === 1) ? 'acum ' + minutes + ' minut' : 'acum ' + minutes + ' minute';

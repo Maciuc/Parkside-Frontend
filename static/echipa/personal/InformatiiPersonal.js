@@ -2,6 +2,7 @@
 
 import MeniuPrincipal from "/static/MeniuPrincipal.js";
 import SubsolPrincipal from "/static/SubsolPrincipal.js";
+import { backendServerAddress } from "/static/index.js";
 
 let shadow;
 
@@ -101,6 +102,10 @@ class InformatiiPersonal extends HTMLElement {
                     transition: all ease-in 0.25s;
                 }
 
+                .dot:nth-child(2n+0) .year{
+                    margin-top: -5rem;
+                }
+
                 .dot:hover {
                     height: 3rem;
                     width: 3rem;
@@ -116,11 +121,13 @@ class InformatiiPersonal extends HTMLElement {
                 .info {
                     position: absolute;
                     font-size: 2rem;
-                    height: 30rem;
-                    width: 30rem;
-                    background-color: #e1e6ed;
+                    height: fit-content;
+                    width: fit-content;
+                    background-color: white;
                     display: none;
                     border-radius: 1rem;
+                    box-shadow: 0 0 1.5rem gray;
+                    padding: 1rem 1rem 0.5rem 1rem;
                 }
 
                 .info .close {
@@ -145,18 +152,65 @@ class InformatiiPersonal extends HTMLElement {
                     cursor: pointer;
                 }
 
+                .info .year {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .info .year-info {
+                    display: grid;
+                    grid-template-columns: 1fr 2fr;
+                    margin-top: 4rem;
+                }
+
+                .year-info p {
+                    margin: 0.5rem 0;
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    background-color: #3E4095;
+                    color: white;
+                    padding: 1rem;
+                }
+
+                .year-info .c1 {
+                    justify-content: flex-start;
+                    border-radius: 1rem 0 0 1rem;
+                }
+
+                .year-info .c2 {
+                    justify-content: flex-end;
+                    border-radius: 0 1rem 1rem 0;
+                }
+
                 .dots {
                     width: calc(100% - 15rem);
-                    position: absolute;
                     display: flex;
-                    flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
+                    position: absolute; 
                 }
 
                 .line {
                     width: 100%;
                     border-bottom: 0.1rem solid #bbb;
+                }
+
+                .info .trofee {
+                    margin: 0.5rem 0;
+                    padding: 1rem;
+                    border-radius: 1rem;
+                    background-color: #3E4095;
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .trofee p {
+                    margin: 0.5rem 0;
                 }
             </style>
 
@@ -176,57 +230,7 @@ class InformatiiPersonal extends HTMLElement {
                     <div class="timeline">
                         <div class="line">
                         </div>
-                        <div class="dots">
-                            <div class="dot">
-                                <div class="year">
-                                    2010
-                                </div>
-                                <div class="info">
-                                    <div class="close">
-                                        X
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dot">
-                                <div class="year">
-                                    2013
-                                </div>
-                                <div class="info">
-                                    <div class="close">
-                                        X
-                                    </div>    
-                                </div>
-                            </div>
-                            <div class="dot">
-                                <div class="year">
-                                    2015
-                                </div>
-                                <div class="info">
-                                    <div class="close">
-                                        X
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dot">
-                                <div class="year">
-                                    2019
-                                </div>
-                                <div class="info">
-                                    <div class="close">
-                                        X
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dot">
-                                <div class="year">
-                                    2022
-                                </div>
-                                <div class="info">
-                                    <div class="close">
-                                        X
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="dots">    
                         </div>
                     </div>
                 </div>
@@ -243,272 +247,242 @@ class InformatiiPersonal extends HTMLElement {
         this.render();
     }
 
-    personal = [
-        {
-            Nume: "Dascălu",
-            Prenume: "Codrin",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inălțime: "1.80 m",
-            Rol: "INTER STÂNGA",
-            descriere: "Pasionat de mic de handbal, în urma probelor la care a fost supus, la vârsta de 8 ani a fost selectat în echipa de juniori ai CSU Suceava. De atunci și până în prezent ocupa postul de Inter Stânga în echipa de juniori ai CSU Suceava.",
-            imagine: "/static/imagini/staff/DascăluCodrin_IS.jpg"
-        },
-        {
-            Nume: "Leonte",
-            Prenume: "Ștefan",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "PORTAR",
-            descriere: "",
-            imagine: "/static/imagini/staff/LeonteȘtefan_PO.png"
-        },
-        {
-            Nume: "Reuț",
-            Prenume: "Alexandru",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "INTER STÂNGA",
-            descriere: "",
-            imagine: "/static/imagini/staff/ReuțAlexandru_IS.png"
-        },
-        {
-            Nume: "Rusu",
-            Prenume: "Eduard",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "EXTREMĂ DREAPTĂ",
-            descriere: "",
-            imagine: "/static/imagini/staff/RusuEduard_ED.png"
-        },
-        {
-            Nume: "Zăpodianu",
-            Prenume: "Nicolas",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "PIVOT",
-            descriere: "",
-            imagine: "/static/imagini/staff/ZăpodianuNicolas_PI.png"
-        },
-        {
-            Nume: "Ostafe",
-            Prenume: "Rareș",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "CENTRU",
-            descriere: "",
-            imagine: "/static/imagini/staff/OstafeRareș_C.png"
-        },
-        {
-            Nume: "Niculaie",
-            Prenume: "Bogdan",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "CENTRU",
-            descriere: "",
-            imagine: "/static/imagini/staff/NiculaieBogdan_C.png"
-        },
-        {
-            Nume: "Focșăneanu",
-            Prenume: "Alexandru",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "PIVOT",
-            descriere: "",
-            imagine: "/static/imagini/staff/FocșăneanuAlexandru_PI.png"
-        },
-        {
-            Nume: "Țivichi",
-            Prenume: "Alexandru",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "EXTREMĂ STÂNGA",
-            descriere: "",
-            imagine: "/static/imagini/staff/ȚivichiAlexandru_ES.png"
-        },
-        {
-            Nume: "Radu",
-            Prenume: "Codrin",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "INTER DREAPTA",
-            descriere: "",
-            imagine: "/static/imagini/staff/RaduCodrin_ID.png"
-        },
-        {
-            Nume: "Ilucă",
-            Prenume: "Teodor",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "EXTREMĂ STÂNGĂ",
-            descriere: "",
-            imagine: "/static/imagini/staff/IlucăTeodor_ES.png"
-        },
-        {
-            Nume: "Pășcuț",
-            Prenume: "Ionuț",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "EXTREMĂ DREAPTĂ",
-            descriere: "",
-            imagine: "/static/imagini/staff/PășcuțIonuț_ED.png"
-        },
-        {
-            Nume: "Moșneagu",
-            Prenume: "Teodor",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "INTER DREAPTA",
-            descriere: "",
-            imagine: "/static/imagini/staff/MoșneaguTeodor_ID.png"
-        },
-        {
-            Nume: "Rîpă",
-            Prenume: "Răzvan",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "PORTAR",
-            descriere: "",
-            imagine: "/static/imagini/staff/RîpăRăzvan_PO.png"
-        },
-        {
-            Nume: "Grigore",
-            Prenume: "Sorin",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "EXTREMĂ DREAPTĂ",
-            descriere: "",
-            imagine: "/static/imagini/staff/GrigoreSorin_ED.png"
-        },
-        {
-            Nume: "Podovei",
-            Prenume: "Dragoș",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "PORTAR",
-            descriere: "",
-            imagine: "/static/imagini/staff/PodoveiDragoș_PO.png"
-        },
-        {
-            Nume: "Rață",
-            Prenume: "Andrei",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "CENTRU",
-            descriere: "",
-            imagine: "/static/imagini/staff/RațăAndrei_C.png"
-        },
-        {
-            Nume: "Șerban",
-            Prenume: "Emanuel",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "PIVOT",
-            descriere: "",
-            imagine: "/static/imagini/staff/ȘerbanEmanuel_PI.png"
-        },
-        {
-            Nume: "Roșu",
-            Prenume: "Iulian",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "EXTREMĂ STÂNGĂ",
-            descriere: "",
-            imagine: "/static/imagini/staff/RoșuIulian_ES.png"
-        },
-        {
-            Nume: "Vornicu",
-            Prenume: "Mihai",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "KINETOTERAPEUT",
-            descriere: "",
-            imagine: "/static/imagini/staff/VornicuMihai_K.png"
-        },
-        {
-            Nume: "Tcaciuc",
-            Prenume: "Ioan",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "ANTRENOR",
-            descriere: "",
-            imagine: "/static/imagini/staff/TcaciucIoan_A.png"
-        },
-        {
-            Nume: "Boca",
-            Prenume: "Vasile",
-            Naționalitate: "Română",
-            "Data nașterii": "30.10.2008",
-            Inaltime: "1.83 m",
-            Rol: "ANTRENOR",
-            descriere: "",
-            imagine: "/static/imagini/staff/BocaVasile_A.png"
-        }
-    ];
+    fillPageWithPersonDetails(personId,isPlayer) {
+        return new Promise((resolve) => {
+            fetch(backendServerAddress + (isPlayer?"api/Player/getPlayer/":"api/Stuff/getStuff/") + personId)
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(personInfo => {
+                return new Promise((resolve) => {
+                    this.shadowRoot.querySelector(".header img").setAttribute("src",personInfo.ImageBase64);
 
-    getPersonInfo(personId) {
-        return this.personal[personId-1];
-    }
+                    const mainInfoContainer = this.shadowRoot.querySelector(".main-info table");
+    
+                    const dataNastere = new Date(personInfo.BirthDate);
+                    const zi = dataNastere.getDate();
+                    const luna = dataNastere.getMonth() + 1;
+                    const an = dataNastere.getFullYear();
+    
+    
+                    let dataNastereToString = (Math.floor(zi/10)===0?("0"):"") + zi + "." + (Math.floor(luna/10)===0?("0"):"") + luna + "." + an;
+    
+                    mainInfoContainer.innerHTML = `
+                        <tr class="main-info-row">
+                            <td class="property">
+                                Nume
+                            </td>
+                            <td class="property-value">
+                                ${personInfo.LastName}
+                            </td>
+                        </tr>
+                        <tr class="main-info-row">
+                            <td class="property">
+                                Prenume
+                            </td>
+                            <td class="property-value">
+                                ${personInfo.FirstName}
+                            </td>
+                        </tr>
+                        <tr class="main-info-row">
+                            <td class="property">
+                                Naționalitate
+                            </td>
+                            <td class="property-value">
+                                ${personInfo.Nationality}
+                            </td>
+                        </tr>
+                        <tr class="main-info-row">
+                            <td class="property">
+                                Dată de naștere
+                            </td>
+                            <td class="property-value">
+                                ${dataNastereToString}
+                            </td>
+                        </tr>
+                        <tr class="main-info-row">
+                            <td class="property">
+                                Înălțime
+                            </td>
+                            <td class="property-value">
+                                ${personInfo.Height}
+                            </td>
+                        </tr>
+                        ${isPlayer?
+                        `<tr class="main-info-row">
+                            <td class="property">
+                                Număr
+                            </td>
+                            <td class="property-value">
+                                ${personInfo.Number}
+                            </td>
+                        </tr>`
+                        :``}`;
+    
+                    if(personInfo.Description !== undefined && personInfo.Description.length !== 0)
+                    {
+                        const infoContainer = this.shadowRoot.querySelector(".info-container");
+    
+                        const descriere = document.createElement("div");
+                        descriere.setAttribute("class","descriere");
+    
+                        const textDescriere = document.createElement("div");
+                        textDescriere.setAttribute("class","text");
+                        textDescriere.innerText = personInfo.Description;
+                        descriere.appendChild(textDescriere);
+    
+                        infoContainer.appendChild(descriere);
+                    }
 
-    fillPageWithPersonDetails(personInfo) {
-        this.shadowRoot.querySelector(".header img").setAttribute("src",personInfo.imagine);
+                    resolve();
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            })
+            .then(() => {  
+                let personHist;
+                let personTrof = [];
 
-        const mainInfoContainer = this.shadowRoot.querySelector(".main-info table");
+                new Promise((resolve) => {
+                    fetch(backendServerAddress + (isPlayer?"api/PlayerHistory/getHomePagePlayerHistory/":"api/StuffHistory/getHomePageStuffHistory/") + personId)
+                    .then(response => {
+                        if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                        }  
+                        return response.json();
+                    })
+                    .then(personHistory => {
+                        personHist = personHistory; 
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    })
+                    .then(() => {
+                        resolve();
+                    });
+                })
+                .then(() => {
+                    return new Promise((resolve) => {
+                        if(isPlayer) {
+                            fetch(backendServerAddress + "api/PlayerTrofee/getHomePagePlayerTrofees/" + personId)
+                            .then(response => {
+                                if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                                }  
+                                return response.json();
+                            })
+                            .then(playerTrofees => {
+                                personTrof = playerTrofees;
+                            })
+                            .catch(error => {
+                                console.error('There was a problem with the fetch operation:', error);
+                            }).then(() => {
+                                resolve();
+                            });
+                        }
+                        else {
+                            resolve();
+                        }    
+                    });
+                })
+                .then(() => {
+                    personHist.sort((a,b) => {
+                        return a.Year - b.Year;
+                    });
 
-        let innerHTML = "";
+                    personTrof.sort((a,b) => {
+                        return a.Year - b.Year;
+                    });
 
-        const keys = Object.keys(personInfo);
-        for(let i=0;i<keys.length-2;i++)
-        {
-            let key = keys[i];
+                    let i = 0;
+                    let j = 0;
 
-            innerHTML += `
-            <tr class="main-info-row">
-                <td class="property">
-                    ${key}
-                </td>
-                <td class="property-value">
-                    ${personInfo[key]}
-                </td>
-            </tr>`
-        }
+                    let data = [];
+                    let count = 0;
 
-        mainInfoContainer.innerHTML = innerHTML;
+                    while(i < personHist.length) {
+                        data.push({"An":personHist[i].Year,"Rol":isPlayer?personHist[i].PlayerRole:personHist[i].Role,"Echipa":personHist[i].TeamName,"Trofee":[]});
+                        
+                        while(j < personTrof.length) {
+                            if(personHist[i].Year === personTrof[j].Year) {
+                                data[count]["Trofee"].push([personTrof[j].ChampionshipName,personTrof[j].TrofeeName]);
+                                ++j;
+                            }
+                            else {
+                                break;
+                            }
+                        }
 
-        if(personInfo.descriere !== undefined && personInfo["descriere"].length !== 0)
-        {
-            const infoContainer = this.shadowRoot.querySelector(".info-container");
+                        ++i;
+                        ++count;
+                    }
 
-            const descriere = document.createElement("div");
-            descriere.setAttribute("class","descriere");
+                    console.log(data)
 
-            const textDescriere = document.createElement("div");
-            textDescriere.setAttribute("class","text");
-            textDescriere.innerText = personInfo["descriere"];
-            descriere.appendChild(textDescriere);
+                    const dots = this.shadowRoot.querySelector(".dots");
 
-            infoContainer.appendChild(descriere);
-        }
+                    for(let i=0;i<data.length;i++) {
+                        let div = document.createElement("div");
+                        div.setAttribute("class","dot");
+                        
+                        let info = ``;
+
+                        const keys = Object.keys(data[i]);
+
+                        for(let j=1;j<keys.length-1;j++) {
+                            info += `
+                            <p class="c1">${keys[j]}</p> 
+                            <p class="c2">${data[i][keys[j]]}</p>`;
+                        }
+
+                        let trof = ``;
+                        const trofee = data[i][keys[keys.length-1]];
+
+                        if(trofee.length !== 0) {
+                            trof += `<p>Trofee</p>`;
+
+                            for(let j=0;j<trofee.length;j++) {
+                                trof += `<p> ${trofee[j][0]} - ${trofee[j][1]}`;
+                            }
+                        }
+
+                        div.innerHTML = `
+                            <div class="year">
+                                ${data[i].An}
+                            </div>
+                            <div class="info">
+                                <div class="year">
+                                    ${data[i].An}
+                                </div>
+                                <div class="close">
+                                    X
+                                </div>
+                                <div class="year-info">
+                                    ${info}
+                                </div>
+                                ${trofee.length !== 0?`
+                                <div class="trofee">
+                                    ${trof}
+                                </div>`
+                            :``}
+                            </div>`;
+
+                        dots.appendChild(div);
+                    }
+
+                    if(data.length === 1) {
+                        dots.style.justifyContent = "center";
+                    }
+                })
+                .then(() => {
+                    resolve();
+                }); 
+            });
+        });
     }
 
     lastDotSelected = undefined;
@@ -536,23 +510,22 @@ class InformatiiPersonal extends HTMLElement {
 
     connectedCallback() {
         const id = new URLSearchParams(window.location.search).get('id');
-
-        if(id!==null && id!=='') {
-            const personInfo = this.getPersonInfo(id);
-
-            this.fillPageWithPersonDetails(personInfo);
-
-            const dots = this.shadowRoot.querySelectorAll(".dot");
-            for(let i=0;i<dots.length;i++)
-            {
-                dots[i].addEventListener(`click`,(eventInfo)=>{
-                    if(this.lastDotSelected === undefined) {
-                        this.lastDotSelected = eventInfo.target;
-                    this.dotMouseEnter();
-                    }
-                });
-                dots[i].querySelector(".info .close").addEventListener(`click`,this.dotMouseLeave.bind(this));
-            }
+        const esteJucator = new URLSearchParams(window.location.search).get('jucator');
+        if(id!==null && id!=='' && esteJucator!==null) {
+            this.fillPageWithPersonDetails(id,esteJucator==="true"?true:false)
+            .then(() => {
+                const dots = this.shadowRoot.querySelectorAll(".dot");
+                for(let i=0;i<dots.length;i++)
+                {
+                    dots[i].addEventListener(`click`,(eventInfo)=>{
+                        if(this.lastDotSelected === undefined) {
+                            this.lastDotSelected = eventInfo.target;
+                        this.dotMouseEnter();
+                        }
+                    });
+                    dots[i].querySelector(".info .close").addEventListener(`click`,this.dotMouseLeave.bind(this));
+                }
+            });
         }
         else {
             window.history.go(-1);//return to previous page

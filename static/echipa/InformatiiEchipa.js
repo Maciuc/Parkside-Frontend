@@ -2,11 +2,12 @@ import GrupareRol from "./GrupareRol.js";
 import InfoCard from "./InfoCard.js";
 import MeniuPrincipal from "../MeniuPrincipal.js";
 import SubsolPrincipal from "../SubsolPrincipal.js";
+import {backendServerAddress} from "../index.js";
 
 let shadow;
 
-const roluri = ["CENTRU","PIVOT","INTER","EXTREMĂ","PORTAR","ANTRENOR"];
-const roluriPersonalMedical = ["KINETOTERAPEUT"];
+const roluriPlayeri = ["CENTRU","PIVOT","INTER","EXTREMA","PORTAR"];
+const roluriAntrenori = ["ANTRENOR","KINETOTERAPEUT"];
 const inaltimeInterfataCautare = 20;//in rem
 
 class InformatiiEchipa extends HTMLElement {
@@ -49,6 +50,10 @@ class InformatiiEchipa extends HTMLElement {
                     margin: 1rem;
                 }
 
+                .user-input-group #select-campionat{ 
+                    width: 28rem;
+                }
+
                 .buttons {
                     display: flex;
                     flex-direction: column;
@@ -77,7 +82,7 @@ class InformatiiEchipa extends HTMLElement {
                     border-radius: 0.25rem;
                 }
 
-                .stuff-container {
+                .team-container {
                     padding: 0 10%;
                     width: 80%;
                     display: flex;
@@ -131,21 +136,7 @@ class InformatiiEchipa extends HTMLElement {
                         Caută
                     </button>
                 </div>
-                <div class="stuff-container">
-                    <grupare-rol class="grupare-centrali" rol="CENTRALI">
-                    </grupare-rol>
-                    <grupare-rol class="grupare-pivoti" rol="PIVOȚI">
-                    </grupare-rol>
-                    <grupare-rol class="grupare-interi" rol="INTERI">
-                    </grupare-rol>
-                    <grupare-rol class="grupare-extreme" rol="EXTREME">
-                    </grupare-rol>
-                    <grupare-rol class="grupare-portari" rol="PORTARI">
-                    </grupare-rol>
-                    <grupare-rol class="grupare-antrenori" rol="ANTRENORI">
-                    </grupare-rol>
-                    <grupare-rol class="grupare-personal-medical" rol="PERSONAL MEDICAL">
-                    </grupare-rol>
+                <div class="team-container">
                 </div>
                 <subsol-principal>
                 </subsol-principal>
@@ -162,242 +153,32 @@ class InformatiiEchipa extends HTMLElement {
 
     /**
      * 
-     * @param numeCampionat string cu numele campionatului pentru care se doreste componenta staff-ului
-     * @returns un vector de json cu componenta staff-ului aferent campionatului cu numele 'numeCampionat'
+     * @param numeCampionat string cu numele campionatului pentru care se doreste componenta echipei
+     * @returns un vector de json cu componenta echipei aferent campionatului cu numele 'numeCampionat'
      */
-    returneazaStafful(numeCampionat) {
-        switch(numeCampionat) {
-            case "Liga Nationala '23-'24":
-                return [
-                    {
-                        id: 1,
-                        Nume: "Dascălu",
-                        Prenume: "Codrin",
-                        Numar: "99",
-                        Inaltime: "1.80 m",
-                        rol: "INTER STÂNGA",
-                        imagine: "/static/imagini/staff/DascăluCodrin_IS.jpg"
-                    },
-                    {
-                        id: 2,
-                        Nume: "Leonte",
-                        Prenume: "Ștefan",
-                        Numar: "95",
-                        Inaltime: "1.83 m",
-                        rol: "PORTAR",
-                        imagine: "/static/imagini/staff/LeonteȘtefan_PO.png"
-                    },
-                    {
-                        id: 3,
-                        Nume: "Reuț",
-                        Prenume: "Alexandru",
-                        Numar: "89",
-                        Inaltime: "1.83 m",
-                        rol: "INTER STÂNGA",
-                        imagine: "/static/imagini/staff/ReuțAlexandru_IS.png"
-                    },
-                    {
-                        id: 4,
-                        Nume: "Rusu",
-                        Prenume: "Eduard",
-                        Numar: "27",
-                        Inaltime: "1.83 m",
-                        rol: "EXTREMĂ DREAPTĂ",
-                        imagine: "/static/imagini/staff/RusuEduard_ED.png"
-                    },
-                    {
-                        id: 5,
-                        Nume: "Zăpodianu",
-                        Prenume: "Nicolas",
-                        Numar: "24",
-                        Inaltime: "1.83 m",
-                        rol: "PIVOT",
-                        imagine: "/static/imagini/staff/ZăpodianuNicolas_PI.png"
-                    },
-                    {
-                        id: 6,
-                        Nume: "Ostafe",
-                        Prenume: "Rareș",
-                        Numar: "22",
-                        Inaltime: "1.83 m",
-                        rol: "CENTRU",
-                        imagine: "/static/imagini/staff/OstafeRareș_C.png"
-                    },
-                    {
-                        id: 7,
-                        Nume: "Niculaie",
-                        Prenume: "Bogdan",
-                        Numar: "98",
-                        Inaltime: "1.83 m",
-                        rol: "CENTRU",
-                        imagine: "/static/imagini/staff/NiculaieBogdan_C.png"
-                    },
-                    {
-                        id: 8,
-                        Nume: "Focșăneanu",
-                        Prenume: "Alexandru",
-                        Numar: "78",
-                        Inaltime: "1.83 m",
-                        rol: "PIVOT",
-                        imagine: "/static/imagini/staff/FocșăneanuAlexandru_PI.png"
-                    },
-                    {
-                        id: 9,
-                        Nume: "Țivichi",
-                        Prenume: "Alexandru",
-                        Numar: "42",
-                        Inaltime: "1.83 m",
-                        rol: "EXTREMĂ STÂNGA",
-                        imagine: "/static/imagini/staff/ȚivichiAlexandru_ES.png"
-                    },
-                    {
-                        id: 10,
-                        Nume: "Radu",
-                        Prenume: "Codrin",
-                        Numar: "21",
-                        Inaltime: "1.83 m",
-                        rol: "INTER DREAPTA",
-                        imagine: "/static/imagini/staff/RaduCodrin_ID.png"
-                    },
-                    {
-                        id: 11,
-                        Nume: "Ilucă",
-                        Prenume: "Teodor",
-                        Numar: "18",
-                        Inaltime: "1.83 m",
-                        rol: "EXTREMĂ STÂNGĂ",
-                        imagine: "/static/imagini/staff/IlucăTeodor_ES.png"
-                    },
-                    {
-                        id: 12,
-                        Nume: "Pășcuț",
-                        Prenume: "Ionuț",
-                        Numar: "14",
-                        Inaltime: "1.83 m",
-                        rol: "EXTREMĂ DREAPTĂ",
-                        imagine: "/static/imagini/staff/PășcuțIonuț_ED.png"
-                    },
-                    {
-                        id: 13,
-                        Nume: "Moșneagu",
-                        Prenume: "Teodor",
-                        Numar: "36",
-                        Inaltime: "1.83 m",
-                        rol: "INTER DREAPTA",
-                        imagine: "/static/imagini/staff/MoșneaguTeodor_ID.png"
-                    },
-                    {
-                        id: 14,
-                        Nume: "Rîpă",
-                        Prenume: "Răzvan",
-                        Numar: "16",
-                        Inaltime: "1.83 m",
-                        rol: "PORTAR",
-                        imagine: "/static/imagini/staff/RîpăRăzvan_PO.png"
-                    },
-                    {
-                        id: 15,
-                        Nume: "Grigore",
-                        Prenume: "Sorin",
-                        Numar: "9",
-                        Inaltime: "1.83 m",
-                        rol: "EXTREMĂ DREAPTĂ",
-                        imagine: "/static/imagini/staff/GrigoreSorin_ED.png"
-                    },
-                    {
-                        id: 16,
-                        Nume: "Podovei",
-                        Prenume: "Dragoș",
-                        Numar: "12",
-                        Inaltime: "1.83 m",
-                        rol: "PORTAR",
-                        imagine: "/static/imagini/staff/PodoveiDragoș_PO.png"
-                    },
-                    {
-                        id: 17,
-                        Nume: "Rață",
-                        Prenume: "Andrei",
-                        Numar: "11",
-                        Inaltime: "1.83 m",
-                        rol: "CENTRU",
-                        imagine: "/static/imagini/staff/RațăAndrei_C.png"
-                    },
-                    {
-                        id: 18,
-                        Nume: "Șerban",
-                        Prenume: "Emanuel",
-                        Numar: "5",
-                        Inaltime: "1.83 m",
-                        rol: "PIVOT",
-                        imagine: "/static/imagini/staff/ȘerbanEmanuel_PI.png"
-                    },
-                    {
-                        id: 19,
-                        Nume: "Roșu",
-                        Prenume: "Iulian",
-                        Numar: "4",
-                        Inaltime: "1.83 m",
-                        rol: "EXTREMĂ STÂNGĂ",
-                        imagine: "/static/imagini/staff/RoșuIulian_ES.png"
-                    },
-                    {
-                        id: 20,
-                        Nume: "Vornicu",
-                        Prenume: "Mihai",
-                        Inaltime: "1.83 m",
-                        rol: "KINETOTERAPEUT",
-                        imagine: "/static/imagini/staff/VornicuMihai_K.png"
-                    },
-                    {
-                        id: 21,
-                        Nume: "Tcaciuc",
-                        Prenume: "Ioan",
-                        Inaltime: "1.83 m",
-                        rol: "ANTRENOR",
-                        imagine: "/static/imagini/staff/TcaciucIoan_A.png"
-                    },
-                    {
-                        id: 22,
-                        Nume: "Boca",
-                        Prenume: "Vasile",
-                        Inaltime: "1.83 m",
-                        rol: "ANTRENOR",
-                        imagine: "/static/imagini/staff/BocaVasile_A.png"
-                    }
-                ];
-            case "Supercupa Romaniei '23-'24":
-                return [
-                    {
-                        id: 3,
-                        Nume: "Ionescu",
-                        Prenume: "Ion",
-                        Numar: "4",
-                        Inaltime: "1.75 m",                        
-                        rol: "PIVOT",
-                        imagine: "/static/imagini/staff/FocșăneanuAlexandru_PI.jpg"
-                    },
-                    {
-                        id: 4,
-                        Nume: "Ionescu",
-                        Prenume: "Ionut",
-                        Numar: "10",
-                        Inaltime: "1.73 m",
-                        rol: "PORTAR",
-                        imagine: "/static/imagini/staff/RoșuIulian_ES.jpg"
-                    }
-                ];
-            default:
-                break;
+    returneazaComponentaEchipei(numeCampionat) {
+        const players = [];
+        const stuff = [];
+        const data = [players,stuff];
+
+        let temp = numeCampionat.split("-")[0];
+        const campionat = temp.substring(0,temp.length-5);
+        const an = temp.substring(temp.length-4,temp.length);
+
+        for(let i=0;i<this.playersHistoryDataBase.length;i++) {
+            if(this.playersHistoryDataBase[i]["Year"] === an && this.playersHistoryDataBase[i]["ChampionshipName"] === campionat) {
+                players.push(this.playersHistoryDataBase[i]);
+            }
         }
-    }
 
-    /**
-     * @returns numele campionatului pentru care se va afisa staff-ul atunci cand este afisata pagina "Echipa"
-     */
-    returneazaNumeleCampionatuluiDefault() {
-        return "Liga Nationala '23-'24";
-    }
+        for(let i=0;i<this.stuffHistoryDataBase.length;i++) {
+            if(this.stuffHistoryDataBase[i]["Year"] === an) {
+                stuff.push(this.stuffHistoryDataBase[i]);
+            }
+        }
 
+        return data;
+    }
 
     /**
      * @description selecteaza campionatul default in campul de selectie al campionatului
@@ -407,70 +188,99 @@ class InformatiiEchipa extends HTMLElement {
     }
 
     /**
-     * @returns lista de campionate la care participa echipa
+     * @returns lista de campionate la care a participat echipa
      */
-    returneazaCampionateleLaCareParticipaEchipa() {
-        return [
-            "Liga Nationala '23-'24",
-            "Supercupa Romaniei '23-'24"
-        ];
-    }
+    returneazaCampionateleLaCareAParticipatEchipa() {
+        let setCampionate = new Set();
 
-    returneazaIndexulRolului(numeRol) {
-        return roluri.indexOf(numeRol.split(' ')[0]);
+        for(let i=0;i<this.playersHistoryDataBase.length;i++) {
+            let year = parseInt(this.playersHistoryDataBase[i]["Year"])
+            setCampionate.add(this.playersHistoryDataBase[i]["ChampionshipName"] + " " + year + "-" + (year+1));
+        }
+
+        return Array.from(setCampionate).sort((a,b) => {
+                return b.substring(b.length-5,4) - a.substring(a.length-5,4);
+            }
+        );
     }
 
         /** 
-     * @param jsonList un vector de json, fiecare element contine datele aferente unei persoane
-     * @description foloseste parametrul primit pentru a crea in mod dinamic cartonasele ce prezinta staff-ul 
+     * @param data doi vectori de json, fiecare element din vector contine datele aferente unei persoane
+     * @description foloseste parametrul primit pentru a crea in mod dinamic cartonasele ce prezinta formatia echipei 
      */
-    actualizeazaInformatiileDespreStaff(jsonList) {
-        let numarInformatiiPrincipaleAfisate = 2;
-
+    actualizeazaInformatiileDespreEchipa(data) {
         for(let i=0;i<this.containereRoluri.length;i++) {
             this.containereRoluri[i].innerHTML = '';//golirea listei de persoane pentru fiecare rol
         }
 
-        for(let i=0;i<jsonList.length;i++) {
-            let persoana = jsonList[i];
+        let repeat = 2;
+        do {
+            let jsonList = data[2-repeat];
 
-            let infoCard = document.createElement('info-card');
-            infoCard.shadowRoot.querySelector(".referinta-pagina-detalii").href = `personal/personal.html?id=${persoana['id']}`;
+            for(let i=0;i<jsonList.length;i++) {
+                let persoana = jsonList[i];
+    
+                let infoCard = document.createElement('info-card');
+                infoCard.shadowRoot.querySelector(".referinta-pagina-detalii").href = `personal/personal.html?jucator=${repeat === 2}&id=${(repeat===2)?persoana['PlayerId']:persoana['StuffId']}`;
+    
+                infoCard.shadowRoot.querySelector(".main-info").innerHTML = `
+                    <div class="content">
+                        <b>Nume:</b> ${(repeat === 2)?persoana["PlayerLastName"]:persoana["StuffLastName"]}
+                    </div>
+                    <div class="content">
+                        <b>Prenume:</b> ${(repeat === 2)?persoana["PlayerFirstName"]:persoana["StuffFirstName"]}
+                    </div>`;
 
-            const keys = Object.keys(persoana);
+                infoCard.shadowRoot.querySelector(".detailed-info").innerHTML += `
+                <div class="content">
+                    <b>Naționalitate:</b> ${persoana["Nationality"]}
+                </div>
+                <div class="content">
+                    <b>Înălțime:</b> ${persoana["Height"]}
+                </div>
+                <div class="content">
+                    <b>Dată naștere:</b> ${persoana["BirthDate"]}
+                </div>` + (repeat === 1?
+                    `<div class="content">
+                        <b>Rol:</b> ${persoana.Role}
+                    </div>`
+                    :"");
+                
+                let imagine = (repeat === 2)?persoana["PlayerImageBase64"]:persoana["StuffImageBase64"];
+    
+                infoCard.setAttribute("imagine",imagine);
+    
+                const rol = ((repeat === 2)?persoana["PlayerRole"]:persoana["Role"]).toUpperCase();
+    
+                let indexRol = roluriPlayeri.indexOf(rol.split(' ')[0]);
+    
+                let isPlayer = true;
 
-            for(let k=1;k<keys.length-2;k++) {
-                let caracteristica = keys[k];
-
-                if(k < numarInformatiiPrincipaleAfisate + 1) {
-                    infoCard.shadowRoot.querySelector(".main-info").innerHTML += `
-                        <div class="content">
-                            <b>${caracteristica}:</b> ${persoana[caracteristica]}
-                        </div>`;
+                if(indexRol === -1) {
+                    isPlayer = false;   
+                    
+                    indexRol = roluriAntrenori.indexOf(rol);
                 }
-                else {
-                    infoCard.shadowRoot.querySelector(".detailed-info").innerHTML += `
-                        <div class="content">
-                            <b>${caracteristica}:</b> ${persoana[caracteristica]}
-                        </div>`;
+
+                if(indexRol !== -1) {
+                    if(isPlayer) {
+                        this.containereRoluri[indexRol].appendChild(infoCard);
+                    }
+                    else {
+                        this.containereRoluri[this.containereRoluri.length-1].appendChild(infoCard);
+                    }
                 }
             }
-            
-            let imagine = persoana["imagine"];
 
-            infoCard.setAttribute("imagine",imagine);
+            repeat--;
+        }while(repeat != 0);
 
-            const rol = persoana["rol"];
+        const teamContainer = this.shadowRoot.querySelector(".team-container");
+        teamContainer.innerHTML = "";//remove children
 
-            const indexRol = this.returneazaIndexulRolului(rol);
-
-            if(indexRol !== -1) {
-                this.containereRoluri[indexRol].appendChild(infoCard);
-            }
-            else {
-                if(roluriPersonalMedical.indexOf(rol) !== -1) {
-                    this.containereRoluri[this.containereRoluri.length-1].appendChild(infoCard);
-                }
+        for(let i=0;i<this.containereRoluri.length;i++) {
+            if(this.containereRoluri[i].children.length !== 0) {
+                teamContainer.appendChild(this.containereRoluri[i]);
             }
         }
     }
@@ -490,22 +300,33 @@ class InformatiiEchipa extends HTMLElement {
 
             selectCampionatTag.appendChild(option);
         }
+
+        if(numeCampionate.length != 0) {
+            selectCampionatTag.firstElementChild.selected = true;
+        }   
     }
 
     /** 
-     * @param jsonList un vector de json, fiecare element contine datele aferente unei persoane
+     * @param data doi vectori de json, fiecare element din vector contine datele aferente unei persoane
      * @description actualizeza continutul tagurilor, prin intermediul carora se selecteaza numele si prenumele,
      * din interfata de cautare a unei persoane din staff
      */
-    populeazaCuDateCampurileNumeSiPrenumeDinInterfataDeCautare(jsonList) {
+    populeazaCuDateCampurileNumeSiPrenumeDinInterfataDeCautare(data) {
         let sets = [new Set(), new Set()];
 
-        for(let i=0;i<jsonList.length;i++) {
-            let persoana = jsonList[i];
+        let repeat = 2;
+        do {
+            let jsonList = data[2-repeat];
 
-            sets[0].add(persoana["Nume"]);
-            sets[1].add(persoana["Prenume"]);
-        }
+            for(let i=0;i<jsonList.length;i++) {
+                let persoana = jsonList[i];
+    
+                sets[0].add((repeat === 2)?persoana["PlayerLastName"]:persoana["StuffLastName"]);
+                sets[1].add((repeat === 2)?persoana["PlayerFirstName"]:persoana["StuffFirstName"]);
+            }
+
+            repeat--;
+        }while(repeat != 0);
 
         let selectTags = shadow.querySelectorAll(".user-input #select-nume, .user-input #select-prenume");
 
@@ -670,10 +491,10 @@ class InformatiiEchipa extends HTMLElement {
         shadow.querySelector("#select-nume").value = 'none';
         shadow.querySelector("#select-prenume").value = 'none';
 
-        let staff = this.returneazaStafful(numeCampionatSelectat);
-        this.actualizeazaInformatiileDespreStaff(staff);
+        let echipa = this.returneazaComponentaEchipei(numeCampionatSelectat);
+        this.actualizeazaInformatiileDespreEchipa(echipa);
 
-        this.populeazaCuDateCampurileNumeSiPrenumeDinInterfataDeCautare(staff);
+        this.populeazaCuDateCampurileNumeSiPrenumeDinInterfataDeCautare(echipa);
     }
 
     /**
@@ -713,38 +534,122 @@ class InformatiiEchipa extends HTMLElement {
         this.afiseazaDistinctiaPentruPersoanaCurenta();
     }
 
+    returneazaIstoriculJucatorilor() {
+        return new Promise((resolve, reject) => {
+            fetch(backendServerAddress + "api/PlayerHistory/getPlayerHistories?TeamName=CSU%20Suceava%20Seniori&PageNumber=1&PageSize=100")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    returneazaIstoriculStaffului() {
+        return new Promise((resolve, reject) => {
+            fetch(backendServerAddress + "api/StuffHistory/getStuffHistories?TeamName=CSU%20Suceava%20Seniori&PageNumber=1&PageSize=50")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }  
+                return response.json();
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    playersHistoryDataBase = [];
+    stuffHistoryDataBase = [];
+
     connectedCallback() {
-        this.containereRoluri.push(this.shadowRoot.querySelector(".grupare-centrali"));
-        this.containereRoluri.push(this.shadowRoot.querySelector(".grupare-pivoti"));
-        this.containereRoluri.push(this.shadowRoot.querySelector(".grupare-interi"));
-        this.containereRoluri.push(this.shadowRoot.querySelector(".grupare-extreme"));
-        this.containereRoluri.push(this.shadowRoot.querySelector(".grupare-portari"));
-        this.containereRoluri.push(this.shadowRoot.querySelector(".grupare-antrenori"));
-        this.containereRoluri.push(this.shadowRoot.querySelector(".grupare-personal-medical"));
-        
-        let numeCampionatDefault = this.returneazaNumeleCampionatuluiDefault();
-        this.selecteazaCampionatulDefaultInCampulDeSelectieAlCampionatului();
+        new Promise((resolve) => {
+            this.returneazaIstoriculJucatorilor()
+            .then(istoricJucatori => {
+                this.playersHistoryDataBase = istoricJucatori.Items;
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            })
+            .then(() => {
+                resolve();
+            });
+        })
+        .then(() => {
+            new Promise((resolve) => {
+                this.returneazaIstoriculStaffului()
+                .then(istoricStaff => {
+                    this.stuffHistoryDataBase = istoricStaff.Items;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .then(() => {
+                    resolve();
+                });            
+            })
+            .then(() => {
+                let grupare;
+    
+                grupare = document.createElement("grupare-rol");
+                grupare.setAttribute("rol","CENTRALI");
+                this.containereRoluri.push(grupare);
+    
+                grupare = document.createElement("grupare-rol");
+                grupare.setAttribute("rol","PIVOȚI");
+                this.containereRoluri.push(grupare);
+    
+                grupare = document.createElement("grupare-rol");
+                grupare.setAttribute("rol","INTERI");
+                this.containereRoluri.push(grupare);
+    
+                grupare = document.createElement("grupare-rol");
+                grupare.setAttribute("rol","EXTREME");
+                this.containereRoluri.push(grupare);
 
-        let numeCampionate = this.returneazaCampionateleLaCareParticipaEchipa();
-        this.populeazaCuDateCampulDeSelectieACampionatuluiDinInterfataDeCautare(numeCampionate);
+                grupare = document.createElement("grupare-rol");
+                grupare.setAttribute("rol","PORTARI");
+                this.containereRoluri.push(grupare);
+    
+                grupare = document.createElement("grupare-rol");
+                grupare.setAttribute("rol","ANTRENORI");
+                this.containereRoluri.push(grupare);
+    
+                let numeCampionate = this.returneazaCampionateleLaCareAParticipatEchipa();
 
-        let stuff = this.returneazaStafful(numeCampionatDefault);
-
-        this.actualizeazaInformatiileDespreStaff(stuff);
-
-        this.populeazaCuDateCampurileNumeSiPrenumeDinInterfataDeCautare(stuff);
-
-        shadow.querySelector(".button-cautare").addEventListener('click',this.rutinaDeTratareAEvenimentuluiClickPentruButonulCauta.bind(this))    
-        
-        this.shadowRoot.querySelector(".button-treci-la-persoana-urmatoare").addEventListener('click',this.rutinaDeTrecereLaUrmatoareaPersoanaFiltrata.bind(this));
-        this.shadowRoot.querySelector(".button-treci-la-persoana-anterioara").addEventListener('click',this.rutinaDeTrecereLaAnterioaraPersoanaFiltrata.bind(this));
-
-        shadow.querySelector(".button-ascunde-interfata-de-cautare").addEventListener('click',this.rutinaDeTratareAEvenimentuluiClickPentruButonulAscundeInterfata.bind(this));
-        
-        let selectTags = shadow.querySelectorAll(".user-input #select-nume, .user-input #select-prenume, .user-input #select-campionat");
-        for(let i=0;i<selectTags.length;i++) {
-            selectTags[i].addEventListener('change',(eventInfo)=>{this.rutinaDeTratareAEvenimentuluiDeShimbareAValoriiSelectate(eventInfo);});
-        }
+                if(numeCampionate.length !== 0) {
+                    this.populeazaCuDateCampulDeSelectieACampionatuluiDinInterfataDeCautare(numeCampionate);
+    
+                    let formatieEchipa = this.returneazaComponentaEchipei(numeCampionate[0]);
+    
+                    this.actualizeazaInformatiileDespreEchipa(formatieEchipa);
+                    this.populeazaCuDateCampurileNumeSiPrenumeDinInterfataDeCautare(formatieEchipa);
+    
+                    shadow.querySelector(".button-cautare").addEventListener('click',this.rutinaDeTratareAEvenimentuluiClickPentruButonulCauta.bind(this))    
+            
+                    this.shadowRoot.querySelector(".button-treci-la-persoana-urmatoare").addEventListener('click',this.rutinaDeTrecereLaUrmatoareaPersoanaFiltrata.bind(this));
+                    this.shadowRoot.querySelector(".button-treci-la-persoana-anterioara").addEventListener('click',this.rutinaDeTrecereLaAnterioaraPersoanaFiltrata.bind(this));
+    
+                    shadow.querySelector(".button-ascunde-interfata-de-cautare").addEventListener('click',this.rutinaDeTratareAEvenimentuluiClickPentruButonulAscundeInterfata.bind(this));
+                    
+                    let selectTags = shadow.querySelectorAll(".user-input #select-nume, .user-input #select-prenume, .user-input #select-campionat");
+                    for(let i=0;i<selectTags.length;i++) {
+                        selectTags[i].addEventListener('change',(eventInfo)=>{this.rutinaDeTratareAEvenimentuluiDeShimbareAValoriiSelectate(eventInfo);});
+                    }
+                }  
+            });
+        });  
     }
 }
 
