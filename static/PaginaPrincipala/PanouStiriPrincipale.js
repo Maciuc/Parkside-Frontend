@@ -1,8 +1,9 @@
 import {font_family_default, backendServerAddress} from "../index.js";
 
-function stire(imagineStire,rezumatStire) {
+function stire(imagineStire,rezumatStire,idStire) {
     this.imagineStire = imagineStire;
     this.rezumatStire = rezumatStire;
+    this.idStire = idStire;
 }
 
 var stiriDeAfisat = [];
@@ -91,16 +92,20 @@ class PanouStiriPrincipale extends HTMLElement {
 
             <div class="panou">
                 <div class="container" style="opacity: 0; z-index: -1;">
-                    <div class="img-container">
-                        <img>
-                    </div>
+                    <a href="">
+                        <div class="img-container">
+                            <img>
+                        </div>
+                    </a>
                     <div class="rezumat-stire">
                     </div>
                 </div>
                 <div class="container" style="opacity: 1; z-index:0;">
-                    <div class="img-container">
-                        <img src="${stiriDeAfisat[indexStireCurenta].imagineStire}">
-                    </div>
+                    <a href="/static/PaginaStiri/Stire.html#${stiriDeAfisat[indexStireCurenta].idStire}">
+                        <div class="img-container">
+                            <img src="${stiriDeAfisat[indexStireCurenta].imagineStire}">
+                        </div>
+                    </a>
                     <div class="rezumat-stire">
                         ${stiriDeAfisat[indexStireCurenta].rezumatStire}
                     </div>
@@ -119,7 +124,7 @@ class PanouStiriPrincipale extends HTMLElement {
         this.attachShadow({ mode: "open" });
 
         this.incarcaStirilePrincipale()
-        .then(() => {       
+        .then(() => {
             if(stiriDeAfisat.length !== 0) {
                 this.render();
 
@@ -155,6 +160,7 @@ class PanouStiriPrincipale extends HTMLElement {
         const containerCurent = this.containere[this.indexContainerCurent];
 
         containerCurent.style.opacity = 0;
+        containerCurent.querySelector("a").href = `/static/PaginaStiri/Stire.html#${stiriDeAfisat[indexStireCurenta].idStire}`;
         containerCurent.querySelector("img").src = stiriDeAfisat[indexStireCurenta].imagineStire;
         containerCurent.querySelector(".rezumat-stire").innerText = stiriDeAfisat[indexStireCurenta].rezumatStire;
         containerCurent.style.zIndex = 0;
@@ -208,7 +214,7 @@ class PanouStiriPrincipale extends HTMLElement {
             this.returneazaStirilePrincipale()
             .then(stiri => {
                 for(let i=0;i<stiri.length;i++) {
-                    stiriDeAfisat.push(new stire(stiri[i]["ImageBase64"],stiri[i]["Name"])); 
+                    stiriDeAfisat.push(new stire(stiri[i]["ImageBase64"],stiri[i]["Name"],stiri[i]["Id"])); 
                 }
                 resolve();
             })

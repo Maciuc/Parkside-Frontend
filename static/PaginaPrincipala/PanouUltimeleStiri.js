@@ -179,7 +179,9 @@ class PanouUltimeleStiri extends HTMLElement {
 
                 stire.innerHTML = `
                     <div class="img-container">
-                        <img src="${data[i]["ImageBase64"]}">
+                        <a href="/static/PaginaStiri/Stire.html#${data[i]["Id"]}">
+                            <img src="${data[i]["ImageBase64"]}">
+                        </a>
                     </div>
                     <div class="rezumat">
                         ${data[i]["Name"]}
@@ -235,6 +237,7 @@ class PanouUltimeleStiri extends HTMLElement {
                 }
         }
         else {
+            this.shadowRoot.querySelector(".button-arrow-left").style.visibility = "hidden";
             this.shadowRoot.querySelector(".button-arrow-right").style.visibility = "hidden";
         }
         

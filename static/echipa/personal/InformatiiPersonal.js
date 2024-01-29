@@ -421,8 +421,6 @@ class InformatiiPersonal extends HTMLElement {
                         ++count;
                     }
 
-                    console.log(data)
-
                     const dots = this.shadowRoot.querySelector(".dots");
 
                     for(let i=0;i<data.length;i++) {
