@@ -86,19 +86,40 @@ class ComponentaClasament extends HTMLElement {
      */
     returneazaContinutulCorpuluiDeTabel() {
         return new Promise((resolve, reject) => {
-            fetch(backendServerAddress + "api/Ranking/getRankings")
-            .then(response => {
-                if (!response.ok) {
-                throw new Error('Network response was not ok');
-                }  
-                return response.json();
+            new Promise((resolve) => {
+                fetch(backendServerAddress + "api/Ranking/updateRankings", {
+                    method: "PUT"
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }  
+
+                    return;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                })
+                .then(() => {
+                    resolve();
+                });
             })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
+            .then(() => {
+                fetch(backendServerAddress + "api/Ranking/getRankings")
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                    }  
+                    return response.json();
+                })
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(error => {
+                    reject(error);
+                });
             });
+
         });
     }
 
