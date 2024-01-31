@@ -1,2 +1,2 @@
 # Parkside-Frontend
-Front pentru oameni cu parkinson
+Interfata pentru userii vizitatori care vor accesa pagina echipei Parkside.
